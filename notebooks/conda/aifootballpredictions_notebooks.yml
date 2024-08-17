@@ -6,3 +6,5 @@ dependencies:
   - pip
   - pip:
     - pandas
+    - mrmr_selection
+    - seaborn
