@@ -3,9 +3,9 @@ Script to gather and merge football match data from multiple leagues and seasons
 
 Usage:
 ------
-Run this script from the terminal as follows:
+Run this script from the terminal in the root folder as follows:
 
-    python download_football_data.py --leagues E0 I1 SP1 F1 D1 --seasons 2324 2223 --output_dir data/raw
+    python scripts/download_football_data.py --leagues E0 I1 SP1 F1 D1 --seasons 2324 2223 --output_dir data/raw
 
 Parameters:
 -----------
