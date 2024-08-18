@@ -5,7 +5,7 @@ Usage:
 ------
 Run this script from the terminal as follows, from the root directory of the project:
 
-    python data_preprocessing.py --input_dir data/raw --output_dir data/processed --num_features 20
+    python scripts/data_preprocessing.py --input_dir data/raw --output_dir data/processed --num_features 20
 
 Parameters:
 -----------
@@ -42,7 +42,7 @@ def parse_arguments():
 
     return parser.parse_args()
 
-def load_csv_files(input_folder):
+def load_csv_files(input_folder: str) -> list:
     """
     Load all CSV files from the specified input folder.
 
@@ -60,7 +60,24 @@ def load_csv_files(input_folder):
             data_files.append((filename, data))
     return data_files
 
-def feature_engineering(df):
+def determine_season(date: pd.Timestamp) -> str:
+    """
+    Determine the season based on the date of the match.
+
+    Parameters:
+    date (datetime): The date of the match.
+
+    Returns:
+    str: The season in the format "YYYY/YYYY".
+    """
+
+    year = date.year
+    if date.month >= 8:  # Assuming the season starts in August
+        return f"{year}/{year + 1}"
+    else:
+        return f"{year - 1}/{year}"
+
+def feature_engineering(df: pd.DataFrame) -> pd.DataFrame:
     """
     Perform feature engineering on the DataFrame.
 
@@ -70,25 +87,57 @@ def feature_engineering(df):
     Returns:
     pd.DataFrame: The DataFrame with new features added.
     """
+    # Convert Date column to datetime format
+    df['Date'] = pd.to_datetime(df['Date'], format='%d/%m/%Y')
+    # Create a new column Season based on the Date
+    df['Season'] = df['Date'].apply(determine_season)
+
+    # create the target variable Over2.5 
     df["Over2.5"] = np.where(df["FTHG"] + df["FTAG"] > 2, 1, 0)
-    df['AvgHomeGoalsScored'] = df.groupby('HomeTeam')['FTHG'].transform('mean').round(2)
-    df['AvgAwayGoalsScored'] = df.groupby('AwayTeam')['FTAG'].transform('mean').round(2)
-    df['AvgHomeGoalsConceded'] = df.groupby('HomeTeam')['FTAG'].transform('mean').round(2)
-    df['AvgAwayGoalsConceded'] = df.groupby('AwayTeam')['FTHG'].transform('mean').round(2)
-    df['HomeOver2.5Perc'] = df.groupby('HomeTeam')['Over2.5'].transform('mean').round(2)
-    df['AwayOver2.5Perc'] = df.groupby('AwayTeam')['Over2.5'].transform('mean').round(2)
+    # Group by HomeTeam and calculate the average Full Time Home Goals
+    df['AvgHomeGoalsScored'] = df.groupby(['Season', 'HomeTeam'])['FTHG'].transform('mean').round(2)
+    # Group by AwayTeam and calculate the average Full Time Away Goals
+    df['AvgAwayGoalsScored'] = df.groupby(['Season', 'AwayTeam'])['FTAG'].transform('mean').round(2)
+    # Group by HomeTeam and calculate the average Full Time Away Goals (which are the goals conceded by HomeTeam)
+    df['AvgHomeGoalsConceded'] = df.groupby(['Season', 'HomeTeam'])['FTAG'].transform('mean').round(2)
+    # Group by AwayTeam and calculate the average Full Time Home Goals (which are the goals conceded by AwayTeam)
+    df['AvgAwayGoalsConceded'] = df.groupby(['Season', 'AwayTeam'])['FTHG'].transform('mean').round(2)
+    # Group by HomeTeam and calculate the percentage of games with Over 2.5 goals
+    df['HomeOver2.5Perc'] = (df.groupby(['Season', 'HomeTeam'])['Over2.5'].transform('mean') * 100).round(2)
+    # Group by HomeTeam and calculate the percentage of games with Over 2.5 goals
+    df['AwayOver2.5Perc'] = (df.groupby(['Season', 'AwayTeam'])['Over2.5'].transform('mean') * 100).round(2)
 
+    # Sort the dataframe by HomeTeam and Date
     df = df.sort_values(by=['HomeTeam', 'Date'])
-    df['Last5HomeGoalsScored'] = df.groupby('HomeTeam')['FTHG'].transform(lambda x: x.rolling(5, min_periods=1).mean()).round(2)
-    df['Last5HomeOver2.5Count'] = df.groupby('HomeTeam')['Over2.5'].transform(lambda x: x.rolling(5, min_periods=1).sum()).round(2)
+    # Create a rolling average of the last 5 games for the Full Time Home Goals
+    df['AvgLast5HomeGoalsScored'] = df.groupby(['Season', 'HomeTeam'])['FTHG'].transform(
+        lambda x: x.rolling(5, min_periods=1).mean()).round(2)
+    df['AvgLast5HomeGoalsConceded'] = df.groupby(['Season', 'HomeTeam'])['FTAG'].transform(
+        lambda x: x.rolling(5, min_periods=1).mean()).round(2)
+    # Create a rolling sum of the last 5 games for Over 2.5 goals for home matches
+    df['Last5HomeOver2.5Count'] = df.groupby(['Season', 'HomeTeam'])['Over2.5'].transform(
+        lambda x: x.rolling(5, min_periods=1).sum()).round(2)
+    # Calculate the percentage of Over 2.5 goals in the last 5 home matches
+    df['Last5HomeOver2.5Perc'] = df.groupby(['Season', 'HomeTeam'])['Over2.5'].transform(
+        lambda x: x.rolling(5, min_periods=1).mean() * 100).round(2)
 
+    # Sort the dataframe by HomeTeam and Date
     df = df.sort_values(by=['AwayTeam', 'Date'])
-    df['Last5AwayGoalsScored'] = df.groupby('AwayTeam')['FTAG'].transform(lambda x: x.rolling(5, min_periods=1).mean()).round(2)
-    df['Last5AwayOver2.5Count'] = df.groupby('AwayTeam')['Over2.5'].transform(lambda x: x.rolling(5, min_periods=1).sum()).round(2)
-    
+    # Create a rolling average of the last 5 games for the Full Time Away Goals
+    df['AvgLast5AwayGoalsScored'] = df.groupby(['Season', 'AwayTeam'])['FTAG'].transform(
+        lambda x: x.rolling(5, min_periods=1).mean()).round(2)
+    df['AvgLast5AwayGoalsConceded'] = df.groupby(['Season', 'AwayTeam'])['FTHG'].transform(
+        lambda x: x.rolling(5, min_periods=1).mean()).round(2)
+    # Create a rolling sum of the last 5 games for Over 2.5 goals for away matches
+    df['Last5AwayOver2.5Count'] = df.groupby(['Season', 'AwayTeam'])['Over2.5'].transform(
+        lambda x: x.rolling(5, min_periods=1).sum()).round(2)
+    # Create a rolling sum of the last 5 games for Over 2.5 goals for away matches
+    df['Last5AwayOver2.5Perc'] = df.groupby(['Season', 'AwayTeam'])['Over2.5'].transform(
+        lambda x: x.rolling(5, min_periods=1).mean() * 100).round(2)    
     return df
 
-def drop_useless_columns(df, columns_to_drop):
+
+def drop_useless_columns(df: pd.DataFrame, columns_to_drop: list) -> pd.DataFrame:
     """
     Drop the specified columns from the DataFrame if they exist.
 
@@ -200,16 +249,18 @@ def preprocess_and_save_csv(input_folder, output_folder, num_features, missing_t
         print("Feature engineering completed.")
 
         # Drop useless columns
-        df = drop_useless_columns(df, ['HTHG', 'HTAG'])
+        # All the features related to the goals scored in a match, are higly biasing for the model, so we can drop them
+        df = drop_useless_columns(df, ['FTHG', 'FTAG', 'HTHG', 'HTAG'] )
         print("Useless columns dropped.")
 
         # Feature Selection
         selected_features = feature_selection(df, num_features=num_features, clustering_threshold=clustering_threshold)
+        print(f"Number of selected features: {len(selected_features)}")
         print("Selected features after clustering:", selected_features)
         
         # Create final dataframe with selected features and handle missing values
         categorical_columns = df.select_dtypes(include='object').columns.tolist()
-        df_selected = df[categorical_columns + selected_features + ['Over2.5']]
+        df_selected = df[["Date"] + categorical_columns + selected_features + ['Over2.5']]
         df_selected = handle_missing_values(df_selected, missing_threshold)
 
         # Save the preprocessed dataframe
