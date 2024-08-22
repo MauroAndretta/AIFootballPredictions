@@ -163,16 +163,27 @@ AvgAHA = Market average Asian handicap away team odds
 Key to additional features:
 
 Over2.5 = Binary indicator if the match ended with more than 2.5 total goals (1 = Yes, 0 = No)
-AvgHomeGoalsScored = Average number of full-time goals scored by the home team across all matches
-AvgAwayGoalsScored = Average number of full-time goals scored by the away team across all matches
-AvgHomeGoalsConceded = Average number of full-time goals conceded by the home team across all matches
-AvgAwayGoalsConceded = Average number of full-time goals conceded by the away team across all matches
-HomeOver2.5Perc = Percentage of home matches that ended with over 2.5 goals
-AwayOver2.5Perc = Percentage of away matches that ended with over 2.5 goals
-Last5HomeGoalsScored = Average number of full-time goals scored by the home team in the last 5 home matches
-Last5AwayGoalsScored = Average number of full-time goals scored by the away team in the last 5 away matches
-Last5HomeOver2.5Count = Number of the last 5 home matches where over 2.5 goals were scored
-Last5AwayOver2.5Count = Number of the last 5 away matches where over 2.5 goals were scored
+
+AvgHomeGoalsScored = Average number of full-time goals scored by the home team across all matches in the current season
+AvgAwayGoalsScored = Average number of full-time goals scored by the away team across all matches in the current season
+
+AvgHomeGoalsConceded = Average number of full-time goals conceded by the home team across all matches in the current season
+AvgAwayGoalsConceded = Average number of full-time goals conceded by the away team across all matches in the current season
+
+HomeOver2.5Perc = Percentage of home matches in the current season that ended with over 2.5 goals
+AwayOver2.5Perc = Percentage of away matches in the current season that ended with over 2.5 goals
+
+AvgLast5HomeGoalsScored = Average number of full-time goals scored by the home team in the last 5 home matches in the current season
+AvgLast5AwayGoalsScored = Average number of full-time goals scored by the away team in the last 5 away matches in the current season
+
+AvgLast5HomeGoalsConceded = Average number of full-time goals conceded by the home team in the last 5 home matches in the current season
+AvgLast5AwayGoalsConceded = Average number of full-time goals conceded by the away team in the last 5 away matches in the current season
+
+Last5HomeOver2.5Count = Number of the last 5 home matches where over 2.5 goals were scored in the current season
+Last5AwayOver2.5Count = Number of the last 5 away matches where over 2.5 goals were scored in the current season
+
+Last5HomeOver2.5Perc = Percentage of the last 5 home matches where over 2.5 goals were scored in the current season
+Last5AwayOver2.5Perc = Percentage of the last 5 away matches where over 2.5 goals were scored in the current season
 
 
 
