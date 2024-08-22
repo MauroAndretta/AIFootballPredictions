@@ -4,3 +4,5 @@ mrmr_selection
 seaborn
 xgboost
 tensorflow==2.10
+scikit-optimize
+
