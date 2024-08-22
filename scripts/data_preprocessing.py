@@ -27,6 +27,7 @@ import pandas as pd
 import numpy as np
 import scipy.cluster.hierarchy as sch
 from mrmr import mrmr_classif
+from sklearn.preprocessing import StandardScaler
 
 def parse_arguments():
     """
@@ -156,7 +157,7 @@ def drop_useless_columns(df: pd.DataFrame, columns_to_drop: list) -> pd.DataFram
 
     return df
 
-def feature_selection(df, target_column="Over2.5", num_features=20, clustering_threshold=0.7):
+def feature_selection(df, target_column="Over2.5", num_features=20, clustering_threshold=0.5):
     """
     Perform feature selection using mRMR and hierarchical clustering.
 
@@ -168,23 +169,46 @@ def feature_selection(df, target_column="Over2.5", num_features=20, clustering_t
     Returns:
     list: A list of selected feature names after clustering.
     """
-    numerical_columns = df.select_dtypes(exclude='object').columns.tolist()
-    X = df[numerical_columns].drop([target_column], axis=1)
-    y = df[target_column]
-    
-    selected_features = mrmr_classif(X=X, y=y, K=num_features)
-    corr_matrix = df[selected_features].corr(method='spearman')
-    
-    dist = sch.distance.pdist(corr_matrix)
-    linkage = sch.linkage(dist, method='average')
-    cluster_ids = sch.fcluster(linkage, clustering_threshold, criterion='distance')
-    
-    selected_features_clustered = []
-    for cluster_id in pd.Series(cluster_ids).unique():
-        cluster_features = corr_matrix.columns[pd.Series(cluster_ids) == cluster_id]
-        selected_features_clustered.append(cluster_features[0])
+    try:
+        numerical_columns = df.drop(["Date"], axis=1).select_dtypes(exclude='object').columns.tolist()
+        X = df[numerical_columns].drop([target_column], axis=1)
+        y = df[target_column]
+        
+        # 1.0- Select the top features using mRMR
+        selected_features = mrmr_classif(X=X, y=y, K=num_features)
 
-    return selected_features_clustered
+        # 2.0- Standardize the selected features to help with clustering
+        scaler = StandardScaler()
+        scaled_features = scaler.fit_transform(df[selected_features]) 
+
+            # 2.1- Create a DataFrame with the scaled features
+        df_scaled = pd.DataFrame(scaled_features, columns=selected_features)
+        #replace the original data with the scaled data
+        df[selected_features] = df_scaled[selected_features]
+
+        # 3.0- Perform hierarchical clustering to group correlated features
+
+            # 3.1- Calculate the Spearman correlation matrix
+        corr_matrix = df[selected_features].corr(method='spearman')
+        
+            # 3.2- Perform hierarchical clustering d = 1 - r
+        dist = sch.distance.pdist(corr_matrix, metric='euclidean')
+        linkage = sch.linkage(dist, method='average')
+        cluster_ids = sch.fcluster(linkage, clustering_threshold, criterion='distance')
+        
+        # 4.0- Select the feature with the highest variance within each cluster
+        selected_features_clustered = []
+        for cluster_id in pd.Series(cluster_ids).unique():
+            cluster_features = corr_matrix.columns[pd.Series(cluster_ids) == cluster_id]
+            # Select the feature with the highest variance
+            highest_variance_feature = cluster_features[np.argmax(df[cluster_features].var())]
+            selected_features_clustered.append(highest_variance_feature)
+
+        return selected_features_clustered
+    
+    except Exception as e:
+        print(f"Error during feature selection: {e}")
+        return []
 
 def handle_missing_values(df, missing_threshold=10):
     """
