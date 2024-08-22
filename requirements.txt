@@ -1,3 +1,6 @@
 pandas
+numpy==1.23.5
 mrmr_selection
 seaborn
+xgboost
+tensorflow==2.10

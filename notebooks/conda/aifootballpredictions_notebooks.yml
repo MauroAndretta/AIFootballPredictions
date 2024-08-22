@@ -1,10 +1,18 @@
 name: aifootballpredictions_notebooks
 channels:
   - defaults
+  - conda-forge
 dependencies:
-  - python=3.11
+  - python=3.10
   - pip
   - pip:
     - pandas
+    - numpy==1.23.5
     - mrmr_selection
     - seaborn
+    - xgboost
+    - tensorflow==2.10
+  - conda-forge:
+    - cudatoolkit=11.2
+    - cudnn=8.1.0
+
