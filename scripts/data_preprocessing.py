@@ -5,7 +5,7 @@ Usage:
 ------
 Run this script from the terminal as follows, from the root directory of the project:
 
-    python scripts/data_preprocessing.py --input_dir data/raw --output_dir data/processed --num_features 20
+    python scripts/data_preprocessing.py --input_dir data/raw --output_dir data/processed --num_features 20 --clustering_threshold 0.5
 
 Parameters:
 -----------
@@ -15,6 +15,8 @@ output_dir : str
     Directory where the processed CSV files will be saved.
 num_features : int
     Number of top features to select using the mRMR feature selection method.
+clustering_threshold : float
+    The threshold for hierarchical clustering to form flat clusters.
 
 This script will read each CSV file in the input folder, perform feature engineering,
 select relevant features while addressing feature correlation, handle missing values,
@@ -40,6 +42,7 @@ def parse_arguments():
     parser.add_argument("--input_dir", type=str, help="Path to the folder containing the CSV files to be processed.")
     parser.add_argument("--output_dir", type=str, help="Directory where the processed CSV files will be saved.")
     parser.add_argument("--num_features", type=int, help="Number of top features to select using mRMR.")
+    parser.add_argument("--clustering_threshold", type=float, help="The threshold for hierarchical clustering to form flat clusters.")
 
     return parser.parse_args()
 
@@ -165,6 +168,7 @@ def feature_selection(df, target_column="Over2.5", num_features=20, clustering_t
     df (pd.DataFrame): The DataFrame to process.
     target_column (str): The target variable column name.
     num_features (int): The number of features to select using mRMR.
+    clustering_threshold (float): The threshold for hierarchical clustering to form flat clusters.
 
     Returns:
     list: A list of selected feature names after clustering.
@@ -177,6 +181,8 @@ def feature_selection(df, target_column="Over2.5", num_features=20, clustering_t
         # 1.0- Select the top features using mRMR
         selected_features = mrmr_classif(X=X, y=y, K=num_features)
 
+        """
+        DRASTIC DECREASE IN PERFORMANCE WHEN STANDARDIZING THE FEATURES
         # 2.0- Standardize the selected features to help with clustering
         scaler = StandardScaler()
         scaled_features = scaler.fit_transform(df[selected_features]) 
@@ -185,6 +191,7 @@ def feature_selection(df, target_column="Over2.5", num_features=20, clustering_t
         df_scaled = pd.DataFrame(scaled_features, columns=selected_features)
         #replace the original data with the scaled data
         df[selected_features] = df_scaled[selected_features]
+        """
 
         # 3.0- Perform hierarchical clustering to group correlated features
 
@@ -249,7 +256,7 @@ def save_preprocessed_data(df, output_folder, filename):
     df.to_csv(output_file_path, index=False)
     print(f"Preprocessed file saved as {output_file_path}\n")
 
-def preprocess_and_save_csv(input_folder, output_folder, num_features, missing_threshold=10, clustering_threshold=0.7):
+def preprocess_and_save_csv(input_folder, output_folder, num_features, missing_threshold=10, clustering_threshold = 0.5):
     """
     Preprocess CSV files in the specified input folder and save the processed files to the output folder.
 
@@ -299,6 +306,7 @@ if __name__ == "__main__":
     <input_folder>: The folder containing the CSV files to be processed.
     <output_folder>: The folder where the processed CSV files will be saved.
     <num_features>: The number of top features to select using mRMR.
+    <clustering_threshold>: The threshold for hierarchical clustering to form flat clusters.
     """
 
     args = parse_arguments()
@@ -312,4 +320,4 @@ if __name__ == "__main__":
     if not os.path.exists(args.output_dir):
         os.makedirs(args.output_dir)
 
-    preprocess_and_save_csv(args.input_dir, args.output_dir, args.num_features)
+    preprocess_and_save_csv(args.input_dir, args.output_dir, args.num_features, args.clustering_threshold)
