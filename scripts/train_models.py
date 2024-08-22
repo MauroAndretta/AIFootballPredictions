@@ -36,6 +36,11 @@ from sklearn.model_selection import HalvingGridSearchCV, cross_val_score, KFold
 from sklearn.metrics import make_scorer, accuracy_score, precision_score, f1_score, roc_auc_score
 from xgboost import XGBClassifier
 from sklearn.ensemble import HistGradientBoostingClassifier
+import warnings
+from sklearn.exceptions import ConvergenceWarning
+
+# Suppress the ConvergenceWarning
+warnings.filterwarnings("ignore", category=ConvergenceWarning)
 
 
 def parse_arguments():
@@ -118,10 +123,11 @@ def train_and_save_models(X: np.ndarray, y: np.ndarray, output_folder: str, leag
         The name of the league, used for naming the saved model file.
     """
     # Define models and hyperparameters
-    lr_model = LogisticRegression(solver='liblinear')
+    lr_model = LogisticRegression(random_state=42)
     lr_param_grid = {
         'C': [0.01, 0.1, 1, 10],
         'penalty': ['l1', 'l2'],
+        'solver': ['liblinear', 'saga'],  # Include only solvers that support 'l1' and 'l2'
         'max_iter': [2000, 3000]
     }
 
