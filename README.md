@@ -99,7 +99,7 @@ If you want to contribute to this project, please fork the repository and submit
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE) - see the `LICENSE` file for details.
+This project is licensed under the [BSD-3-Claude license](LICENSE) - see the `LICENSE` file for details.
 
 ## Disclaimer
 
