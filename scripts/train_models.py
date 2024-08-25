@@ -5,18 +5,20 @@ Usage:
 ------
 Run this script from the terminal in the root directory as follows:
 
-    python scripts/train_models.py --input_folder data/processed --output_folder models
+    python scripts/train_models.py --processed_data_input_dir data/processed --trained_models_output_dir models
 
 Parameters:
 -----------
---input_folder : str
+--processed_data_input_dir : str
     Path to the folder containing the CSV files to be used for training (e.g., 'data/preprocessed/').
---output_folder : str
+--trained_models_output_dir : str
     Path to the folder where the trained models will be saved (e.g., 'models/').
 --metric_choice : str
     The metric to use for hyperparameter tuning. Choose from 'accuracy', 'precision', 'f1', or 'roc_auc'.
 --n_splits : int
     Number of splits for cross-validation.
+--voting : str
+    Voting method for the ensemble model. Choose from 'soft' or 'hard'.
 
 The script processes each CSV file individually, trains several machine learning models, performs hyperparameter
 tuning, combines the best models into a voting classifier, and saves the trained voting classifier for each league.
@@ -55,8 +57,8 @@ def parse_arguments():
         Parsed command-line arguments.
     """
     parser = argparse.ArgumentParser(description="Train models to predict Over2.5 football outcomes.")
-    parser.add_argument('--input_folder', type=str, required=True, help="Path to the folder containing CSV files.")
-    parser.add_argument('--output_folder', type=str, required=True, help="Path to the folder to save trained models.")
+    parser.add_argument('--processed_data_input_dir', type=str, required=True, help="Path to the folder containing CSV files.")
+    parser.add_argument('--trained_models_output_dir', type=str, required=True, help="Path to the folder to save trained models.")
     # Specify the allowed choices for metric_choice
     parser.add_argument('--metric_choice', type=str, choices=['accuracy', 'precision', 'f1', 'roc_auc'], default='accuracy',
                         help="The metric to use for hyperparameter tuning. Choose from 'accuracy', 'precision', 'f1', or 'roc_auc'.")
@@ -65,13 +67,13 @@ def parse_arguments():
     return parser.parse_args()
 
 
-def load_data(input_folder: str) -> dict:
+def load_data(processed_data_input_dir: str) -> dict:
     """
     Load CSV files from the specified folder and return a dictionary of DataFrames.
 
     Parameters:
     -----------
-    input_folder : str
+    processed_data_input_dir : str
         The path to the folder containing the CSV files.
 
     Returns:
@@ -80,10 +82,10 @@ def load_data(input_folder: str) -> dict:
         A dictionary where keys are file names (without extension) and values are DataFrames.
     """
     data = {}
-    for file_name in os.listdir(input_folder):
+    for file_name in os.listdir(processed_data_input_dir):
         if file_name.endswith('.csv'):
             league_name = file_name.split('_')[0]
-            file_path = os.path.join(input_folder, file_name)
+            file_path = os.path.join(processed_data_input_dir, file_name)
             data[league_name] = pd.read_csv(file_path)
     return data
 
@@ -110,7 +112,7 @@ def prepare_data(df: pd.DataFrame) -> tuple:
     return X, y
 
 
-def train_and_save_models(X: np.ndarray, y: np.ndarray, output_folder: str, league_name: str, metric_choice: str, voting: str = 'soft', n_splits: int = 10):
+def train_and_save_models(X: np.ndarray, y: np.ndarray, trained_models_output_dir: str, league_name: str, metric_choice: str, voting: str = 'soft', n_splits: int = 10):
     """
     Train models, perform hyperparameter tuning, create a voting classifier, and save the model.
 
@@ -120,7 +122,7 @@ def train_and_save_models(X: np.ndarray, y: np.ndarray, output_folder: str, leag
         The feature matrix.
     y : np.ndarray
         The target variable.
-    output_folder : str
+    trained_models_output_dir : str
         The folder where the trained models will be saved.
     league_name : str
         The name of the league, used for naming the saved model file.
@@ -254,7 +256,7 @@ def train_and_save_models(X: np.ndarray, y: np.ndarray, output_folder: str, leag
     print(f"Voting Classifier - {scorer._score_func.__name__}: {np.mean(cv_scores):.4f} ± {np.std(cv_scores):.4f}")
 
     # Save the model
-    model_filename = os.path.join(output_folder, f"{league_name}_voting_classifier.pkl")
+    model_filename = os.path.join(trained_models_output_dir, f"{league_name}_voting_classifier.pkl")
     with open(model_filename, 'wb') as f:
         pickle.dump(voting_clf, f)
     print(f"Model saved to {model_filename}")
@@ -267,16 +269,16 @@ def main():
         args = parse_arguments()
 
         # Load data
-        data = load_data(args.input_folder)
+        data = load_data(args.processed_data_input_dir)
 
         # Ensure output directory exists
-        os.makedirs(args.output_folder, exist_ok=True)
+        os.makedirs(args.trained_models_output_dir, exist_ok=True)
 
         # Train and save models for each league
         for league_name, df in data.items():
             print(f"Processing league: {league_name}")
             X, y = prepare_data(df)
-            train_and_save_models(X, y, args.output_folder, league_name, args.metric_choice, args.voting, args.n_splits)
+            train_and_save_models(X, y, args.trained_models_output_dir, league_name, args.metric_choice, args.voting, args.n_splits)
         
     except Exception as e:
         raise (f"An error occurred: {e}")

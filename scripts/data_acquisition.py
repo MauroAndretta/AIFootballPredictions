@@ -5,7 +5,7 @@ Usage:
 ------
 Run this script from the terminal in the root folder as follows:
 
-    python scripts/download_football_data.py --leagues E0 I1 SP1 F1 D1 --seasons 2324 2223 --output_dir data/raw
+    python scripts/data_acquisition.py --leagues E0 I1 SP1 F1 D1 --seasons 2324 2223 --raw_data_output_dir data/raw
 
 Parameters:
 -----------
@@ -13,7 +13,7 @@ Parameters:
     A space-separated list of league acronyms (e.g., E0 I1 SP1).
 --seasons : str
     A space-separated list of season codes (e.g., 2324 2223).
---output_dir : str
+--raw_data_output_dir : str
     Directory where the merged CSV files will be saved.
 
 This script will download the corresponding CSV files from football-data.co.uk,
@@ -28,7 +28,7 @@ import pandas as pd
 VALID_LEAGUES = ["E0", "E1", "E2", "E3", "EC", "I1", "I2", "D1", "D2", "SP1", "SP2", "F1", "F2"]
 
 # Valid season codes (limiting to recent years only)
-VALID_SEASONS = ["2324", "2223", "2122", "2021"]
+VALID_SEASONS = ["2425","2324", "2223", "2122", "2021"]
 
 def validate_leagues(leagues):
     """
@@ -66,9 +66,10 @@ def validate_seasons(seasons):
         if season not in VALID_SEASONS:
             raise ValueError(f"Invalid season code: {season}. Allowed values are {', '.join(VALID_SEASONS)}")
 
-def download_and_merge_data(leagues, seasons, output_dir):
+def download_and_merge_data(leagues, seasons, raw_data_output_dir):
     """
-    Downloads and merges football match data from the specified leagues and seasons.
+    Downloads and merges football match data from the specified leagues and seasons,
+    keeping only the common columns and preserving their order.
 
     Parameters
     ----------
@@ -76,42 +77,53 @@ def download_and_merge_data(leagues, seasons, output_dir):
         List of league acronyms (e.g., ["E0", "I1", "SP1"]).
     seasons : list of str
         List of season codes (e.g., ["2324", "2223"]).
-    output_dir : str
+    raw_data_output_dir : str
         Directory where the merged CSV files will be saved.
     
     Returns
     -------
     None
     """
-    os.makedirs(output_dir, exist_ok=True)
+    os.makedirs(raw_data_output_dir, exist_ok=True)
     
     for league in leagues:
         league_dfs = []
-        
+        common_columns = None
+        column_order = []
+
         for season in seasons:
             url = f"https://www.football-data.co.uk/mmz4281/{season}/{league}.csv"
             try:
                 df = pd.read_csv(url)
-                league_dfs.append(df)
                 print(f"Downloaded data from {url}")
+                
+                # Determine the common columns across all DataFrames
+                if common_columns is None:
+                    common_columns = set(df.columns)
+                    column_order = df.columns.tolist()  # Preserve initial column order
+                else:
+                    common_columns.intersection_update(df.columns)
+                
+                league_dfs.append(df)
+                
             except Exception as e:
                 print(f"Failed to download data from {url}: {e}")
                 continue
         
-        if league_dfs:
-            # Check for consistency in columns
-            base_columns = league_dfs[0].columns
-            for i, df in enumerate(league_dfs):
-                if not base_columns.equals(df.columns):
-                    raise ValueError(f"Inconsistent columns in {league} league for season {seasons[i]}")
+        if league_dfs and common_columns:
+            # Keep only the common columns, preserving the order from the first DataFrame
+            common_columns = [col for col in column_order if col in common_columns]
+            league_dfs = [df[common_columns] for df in league_dfs]
             
-            # Merge dataframes
+            # Concatenate the DataFrames
             merged_df = pd.concat(league_dfs, ignore_index=True)
             
             # Save to CSV
-            output_path = os.path.join(output_dir, f"{league}_merged.csv")
+            output_path = os.path.join(raw_data_output_dir, f"{league}_merged.csv")
             merged_df.to_csv(output_path, index=False)
             print(f"Saved merged data to {output_path}")
+
+
 
 def parse_arguments():
     """
@@ -139,7 +151,7 @@ def parse_arguments():
     )
     
     parser.add_argument(
-        "--output_dir", 
+        "--raw_data_output_dir", 
         type=str, 
         required=True, 
         help="Directory where the merged CSV files will be saved."
@@ -158,5 +170,5 @@ if __name__ == "__main__":
     download_and_merge_data(
         leagues=args.leagues, 
         seasons=args.seasons,
-        output_dir=args.output_dir
+        raw_data_output_dir=args.raw_data_output_dir
     )

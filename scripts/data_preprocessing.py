@@ -5,13 +5,13 @@ Usage:
 ------
 Run this script from the terminal as follows, from the root directory of the project:
 
-    python scripts/data_preprocessing.py --input_dir data/raw --output_dir data/processed --num_features 20 --clustering_threshold 0.5
+    python scripts/data_preprocessing.py --raw_data_input_dir data/raw --processed_data_output_dir data/processed --num_features 20 --clustering_threshold 0.5
 
 Parameters:
 -----------
-input_dir : str
+raw_data_input_dir : str
     Path to the folder containing the CSV files to be processed.
-output_dir : str
+processed_data_output_dir : str
     Directory where the processed CSV files will be saved.
 num_features : int
     Number of top features to select using the mRMR feature selection method.
@@ -39,10 +39,10 @@ def parse_arguments():
     argparse.Namespace: Parsed command-line arguments.
     """
     parser = argparse.ArgumentParser(description="Preprocess football match data from CSV files.")
-    parser.add_argument("--input_dir", type=str, help="Path to the folder containing the CSV files to be processed.")
-    parser.add_argument("--output_dir", type=str, help="Directory where the processed CSV files will be saved.")
-    parser.add_argument("--num_features", type=int, help="Number of top features to select using mRMR.")
-    parser.add_argument("--clustering_threshold", type=float, help="The threshold for hierarchical clustering to form flat clusters.")
+    parser.add_argument("--raw_data_input_dir", required=True, type=str, help="Path to the folder containing the CSV files to be processed.")
+    parser.add_argument("--processed_data_output_dir", required=True, type=str, help="Directory where the processed CSV files will be saved.")
+    parser.add_argument("--num_features", type=int, default=20, help="Number of top features to select using mRMR.")
+    parser.add_argument("--clustering_threshold", type=float, default=0.5, help="The threshold for hierarchical clustering to form flat clusters.")
 
     return parser.parse_args()
 
@@ -312,12 +312,12 @@ if __name__ == "__main__":
     args = parse_arguments()
     
     # check if the input directory exists
-    if not os.path.exists(args.input_dir):
-        print(f"Input directory {args.input_dir} does not exist.")
+    if not os.path.exists(args.raw_data_input_dir):
+        print(f"Input directory {args.raw_data_input_dir} does not exist.")
         exit(1)
 
     # create the output directory if it does not exist
-    if not os.path.exists(args.output_dir):
-        os.makedirs(args.output_dir)
+    if not os.path.exists(args.processed_data_output_dir):
+        os.makedirs(args.processed_data_output_dir)
 
-    preprocess_and_save_csv(args.input_dir, args.output_dir, args.num_features, args.clustering_threshold)
+    preprocess_and_save_csv(args.raw_data_input_dir, args.processed_data_output_dir, args.num_features, args.clustering_threshold)
