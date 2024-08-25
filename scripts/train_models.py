@@ -38,6 +38,8 @@ from xgboost import XGBClassifier
 from sklearn.ensemble import HistGradientBoostingClassifier
 import warnings
 from sklearn.exceptions import ConvergenceWarning
+from skopt import BayesSearchCV
+from skopt.space import Real, Integer, Categorical
 
 # Suppress the ConvergenceWarning
 warnings.filterwarnings("ignore", category=ConvergenceWarning)
@@ -59,6 +61,7 @@ def parse_arguments():
     parser.add_argument('--metric_choice', type=str, choices=['accuracy', 'precision', 'f1', 'roc_auc'], default='accuracy',
                         help="The metric to use for hyperparameter tuning. Choose from 'accuracy', 'precision', 'f1', or 'roc_auc'.")
     parser.add_argument('--n_splits', type=int, default=10, help="Number of splits for cross-validation.")
+    parser.add_argument('--voting', type=str, choices=['soft', 'hard'], default='soft', help="Voting method for the ensemble model.")
     return parser.parse_args()
 
 
@@ -107,7 +110,7 @@ def prepare_data(df: pd.DataFrame) -> tuple:
     return X, y
 
 
-def train_and_save_models(X: np.ndarray, y: np.ndarray, output_folder: str, league_name: str, metric_choice: str, n_splits: int = 10):
+def train_and_save_models(X: np.ndarray, y: np.ndarray, output_folder: str, league_name: str, metric_choice: str, voting: str = 'soft', n_splits: int = 10):
     """
     Train models, perform hyperparameter tuning, create a voting classifier, and save the model.
 
@@ -121,6 +124,11 @@ def train_and_save_models(X: np.ndarray, y: np.ndarray, output_folder: str, leag
         The folder where the trained models will be saved.
     league_name : str
         The name of the league, used for naming the saved model file.
+    metric_choice : str
+        The metric to use for hyperparameter tuning.
+    n_splits : int
+        Number of splits for cross-validation
+    
     """
     # Define models and hyperparameters
     lr_model = LogisticRegression(random_state=42)
@@ -142,9 +150,7 @@ def train_and_save_models(X: np.ndarray, y: np.ndarray, output_folder: str, leag
     svm_param_grid = {
         'C': [0.1, 1, 10],
         'kernel': ['linear', 'rbf', 'poly'],
-        'gamma': ['scale', 'auto'],
-        'degree': [2, 3, 4, 5],
-        'class_weight': [None, 'balanced']
+        'degree': [2, 3, 4, 5]
     }
 
     rf_model = RandomForestClassifier(random_state=42)
@@ -238,7 +244,7 @@ def train_and_save_models(X: np.ndarray, y: np.ndarray, output_folder: str, leag
         ('rf', best_rf_model),
         ('xgb', best_xgb_model),
         ('hgb', best_hgb_model)
-    ], voting='soft')  # 'soft' for probability-based voting, 'hard' for majority voting
+    ], voting=voting)  # 'soft' for probability-based voting, 'hard' for majority voting
 
     # Fit the voting classifier
     voting_clf.fit(X, y)
@@ -270,7 +276,7 @@ def main():
         for league_name, df in data.items():
             print(f"Processing league: {league_name}")
             X, y = prepare_data(df)
-            train_and_save_models(X, y, args.output_folder, league_name, args.metric_choice, args.n_splits)
+            train_and_save_models(X, y, args.output_folder, league_name, args.metric_choice, args.voting, args.n_splits)
         
     except Exception as e:
         raise (f"An error occurred: {e}")

@@ -9,9 +9,6 @@ __pycache__/
 # Ignore all the .csv files in the data folder
 data/*/*.csv
 
-# Ignore all the .pkl models in the models folder
-models/*.pkl
-
 # Distribution / packaging
 .Python
 build/
