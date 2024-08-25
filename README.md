@@ -111,8 +111,3 @@ The authors of this project do not guarantee the accuracy, reliability, or compl
 
 By using this software, you agree that the authors and contributors are not responsible or liable for any losses or damages of any kind incurred as a result of using the software or relying on the predictions made by the system.
 
-
-The authors of this project do not guarantee the accuracy, reliability, or completeness of any information provided. Use the predictions at your own risk, and always consider the unpredictability of sports events.
-
-By using this software, you agree that the authors and contributors are not responsible or liable for any losses or damages of any kind incurred as a result of using the software or relying on the predictions made by the system.
-
