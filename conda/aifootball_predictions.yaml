@@ -14,10 +14,13 @@ dependencies:
   - cudnn=8.1.0
   - pip:
     - pandas
+    - requests
     - numpy==1.23.5
     - mrmr_selection
     - seaborn
     - xgboost
     - tensorflow==2.10
     - scikit-optimize
+    - python-dotenv
+    - fuzzywuzzy[speedup]
 

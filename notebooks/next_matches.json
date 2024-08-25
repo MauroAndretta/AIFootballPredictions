@@ -1,0 +1,252 @@
+{
+    "E0": [
+        {
+            "date": "2024-08-31 11:30:00",
+            "home_team": "Arsenal",
+            "away_team": "Brighton"
+        },
+        {
+            "date": "2024-08-31 14:00:00",
+            "home_team": "Brentford",
+            "away_team": "Southampton"
+        },
+        {
+            "date": "2024-08-31 14:00:00",
+            "home_team": "Everton",
+            "away_team": "Bournemouth"
+        },
+        {
+            "date": "2024-08-31 14:00:00",
+            "home_team": "Ipswich",
+            "away_team": "Fulham"
+        },
+        {
+            "date": "2024-08-31 14:00:00",
+            "home_team": "Leicester",
+            "away_team": "Aston Villa"
+        },
+        {
+            "date": "2024-08-31 14:00:00",
+            "home_team": "Nott'm Forest",
+            "away_team": "Wolves"
+        },
+        {
+            "date": "2024-08-31 16:30:00",
+            "home_team": "West Ham",
+            "away_team": "Man City"
+        },
+        {
+            "date": "2024-09-01 12:30:00",
+            "home_team": "Chelsea",
+            "away_team": "Crystal Palace"
+        },
+        {
+            "date": "2024-09-01 12:30:00",
+            "home_team": "Newcastle",
+            "away_team": "Tottenham"
+        },
+        {
+            "date": "2024-09-01 15:00:00",
+            "home_team": "Man United",
+            "away_team": "Liverpool"
+        }
+    ],
+    "SP1": [
+        {
+            "date": "2024-08-26 19:30:00",
+            "home_team": "Villarreal",
+            "away_team": "Celta"
+        },
+        {
+            "date": "2024-08-27 17:00:00",
+            "home_team": "Mallorca",
+            "away_team": "Sevilla"
+        },
+        {
+            "date": "2024-08-27 19:30:00",
+            "home_team": "Vallecano",
+            "away_team": "Barcelona"
+        },
+        {
+            "date": "2024-08-28 00:00:00",
+            "home_team": "Betis",
+            "away_team": "Getafe"
+        },
+        {
+            "date": "2024-08-28 17:00:00",
+            "home_team": "Ath Bilbao",
+            "away_team": "Valencia"
+        },
+        {
+            "date": "2024-08-28 17:00:00",
+            "home_team": "Valladolid",
+            "away_team": "Leganes"
+        },
+        {
+            "date": "2024-08-28 19:30:00",
+            "home_team": "Sociedad",
+            "away_team": "Alaves"
+        },
+        {
+            "date": "2024-08-28 19:30:00",
+            "home_team": "Ath Madrid",
+            "away_team": "Espanol"
+        },
+        {
+            "date": "2024-08-29 17:00:00",
+            "home_team": "Girona",
+            "away_team": "Osasuna"
+        },
+        {
+            "date": "2024-08-29 19:30:00",
+            "home_team": "Las Palmas",
+            "away_team": "Real Madrid"
+        }
+    ],
+    "I1": [
+        {
+            "date": "2024-08-30 16:30:00",
+            "home_team": "Venezia",
+            "away_team": "Torino"
+        },
+        {
+            "date": "2024-08-30 18:45:00",
+            "home_team": "Inter",
+            "away_team": "Atalanta"
+        },
+        {
+            "date": "2024-08-31 16:30:00",
+            "home_team": "Bologna",
+            "away_team": "Empoli"
+        },
+        {
+            "date": "2024-08-31 16:30:00",
+            "home_team": "Lecce",
+            "away_team": "Cagliari"
+        },
+        {
+            "date": "2024-08-31 18:45:00",
+            "home_team": "Lazio",
+            "away_team": "Milan"
+        },
+        {
+            "date": "2024-08-31 18:45:00",
+            "home_team": "Napoli",
+            "away_team": "Parma"
+        },
+        {
+            "date": "2024-09-01 16:30:00",
+            "home_team": "Fiorentina",
+            "away_team": "Monza"
+        },
+        {
+            "date": "2024-09-01 16:30:00",
+            "home_team": "Genoa",
+            "away_team": "Verona"
+        },
+        {
+            "date": "2024-09-01 18:45:00",
+            "home_team": "Juventus",
+            "away_team": "Roma"
+        },
+        {
+            "date": "2024-09-01 18:45:00",
+            "home_team": "Udinese",
+            "away_team": "Como"
+        }
+    ],
+    "D1": [
+        {
+            "date": "2024-08-30 18:30:00",
+            "home_team": "Union Berlin",
+            "away_team": null
+        },
+        {
+            "date": "2024-08-31 13:30:00",
+            "home_team": "Stuttgart",
+            "away_team": "Mainz"
+        },
+        {
+            "date": "2024-08-31 13:30:00",
+            "home_team": "Ein Frankfurt",
+            "away_team": "Hoffenheim"
+        },
+        {
+            "date": "2024-08-31 13:30:00",
+            "home_team": "Werder Bremen",
+            "away_team": "Dortmund"
+        },
+        {
+            "date": "2024-08-31 13:30:00",
+            "home_team": "Bochum",
+            "away_team": "M'gladbach"
+        },
+        {
+            "date": "2024-08-31 13:30:00",
+            "home_team": null,
+            "away_team": "Wolfsburg"
+        },
+        {
+            "date": "2024-08-31 16:30:00",
+            "home_team": "Leverkusen",
+            "away_team": "RB Leipzig"
+        },
+        {
+            "date": "2024-09-01 13:30:00",
+            "home_team": "Heidenheim",
+            "away_team": "Augsburg"
+        },
+        {
+            "date": "2024-09-01 15:30:00",
+            "home_team": "Bayern Munich",
+            "away_team": "Freiburg"
+        }
+    ],
+    "F1": [
+        {
+            "date": "2024-08-30 18:45:00",
+            "home_team": "Lyon",
+            "away_team": "Strasbourg"
+        },
+        {
+            "date": "2024-08-31 15:00:00",
+            "home_team": "Brest",
+            "away_team": "St Etienne"
+        },
+        {
+            "date": "2024-08-31 17:00:00",
+            "home_team": "Montpellier",
+            "away_team": "Nantes"
+        },
+        {
+            "date": "2024-08-31 19:00:00",
+            "home_team": "Toulouse",
+            "away_team": "Marseille"
+        },
+        {
+            "date": "2024-09-01 13:00:00",
+            "home_team": "Monaco",
+            "away_team": "Lens"
+        },
+        {
+            "date": "2024-09-01 15:00:00",
+            "home_team": "Angers",
+            "away_team": "Nice"
+        },
+        {
+            "date": "2024-09-01 15:00:00",
+            "home_team": "Le Havre",
+            "away_team": "Auxerre"
+        },
+        {
+            "date": "2024-09-01 15:00:00",
+            "home_team": "Reims",
+            "away_team": "Rennes"
+        },
+        {
+            "date": "2024-09-01 18:45:00",
+            "home_team": "Lille",
+            "away_team": "Paris SG"
+        }
+    ]
+}
