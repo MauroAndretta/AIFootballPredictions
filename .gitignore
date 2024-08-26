@@ -9,6 +9,9 @@ __pycache__/
 # Ignore all the .csv files in the data folder
 #data/*/*.csv
 
+# Ignore all the .json in the notebooks folder
+notebooks/*.json
+
 # Distribution / packaging
 .Python
 build/

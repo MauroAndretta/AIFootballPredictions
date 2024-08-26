@@ -38,17 +38,38 @@ COLUMN_NAME = "HomeTeam"  # The column name in the CSV files containing team nam
 
 # Dictionary of major competition IDs and their corresponding competition codes
 COMPETITIONS = {
-    'E0': {'id': 2021, 'crest': 'https://crests.football-data.org/PL.png', 
-           'next_matches': []},
-    'SP1': {'id': 2014, 'crest': 'https://crests.football-data.org/PD.png', 
-            'next_matches': []},
-    'I1': {'id': 2019, 'crest': 'https://crests.football-data.org/SA.png',
-           'next_matches': []},
-    'D1': {'id': 2002, 'crest': 'https://crests.football-data.org/BL1.png',
-           'next_matches': []},
-    'F1': {'id': 2015, 'crest': 'https://crests.football-data.org/FL1.png',
-           'next_matches': []}, 
+    'E0': {
+        'id': 2021, 
+        'crest': 'https://crests.football-data.org/PL.png', 
+        'name': 'Premier League', 
+        'next_matches': []
+    },
+    'SP1': {
+        'id': 2014, 
+        'crest': 'https://crests.football-data.org/PD.png', 
+        'name': 'La Liga', 
+        'next_matches': []
+    },
+    'I1': {
+        'id': 2019, 
+        'crest': 'https://crests.football-data.org/SA.png', 
+        'name': 'Serie A', 
+        'next_matches': []
+    },
+    'D1': {
+        'id': 2002, 
+        'crest': 'https://crests.football-data.org/BL1.png', 
+        'name': 'Bundesliga', 
+        'next_matches': []
+    },
+    'F1': {
+        'id': 2015, 
+        'crest': 'https://crests.football-data.org/FL1.png', 
+        'name': 'Ligue 1', 
+        'next_matches': []
+    }
 }
+
 
 
 TEAMS_NAMES_MAPPING = {
@@ -238,7 +259,8 @@ def replace_team_names(matches_dict: dict, name_mapping: dict) -> dict:
     Expected schema of matches_dict:
     {
     'E0': {'id': 2021, 
-            'crest': 'https://crests.football-data.org/PL.png', 
+           'name': 'Premier League',
+           'crest': 'https://crests.football-data.org/PL.png', 
            'next_matches': []},
 
            ...
