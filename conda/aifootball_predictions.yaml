@@ -22,4 +22,5 @@ dependencies:
     - tensorflow==2.10
     - scikit-optimize
     - python-dotenv
+    - invoke
 
