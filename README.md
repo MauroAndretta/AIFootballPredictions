@@ -11,18 +11,20 @@
 5. [Data Preprocessing](#data-preprocessing)
 6. [Model Training](#model-training)
 7. [Upcoming Matches Acquisition](#upcoming-matches-acquisition)
-8. [Supported Leagues](#supported-leagues)
-9. [Contributing](#contributing)
-10. [License](#license)
-11. [Discalimer](#disclaimer)
+8. [Making Predictions](#making-predictions)
+9. [Supported Leagues](#supported-leagues)
+10. [Contributing](#contributing)
+11. [License](#license)
+12. [Disclaimer](#disclaimer)
 
 ## Project Overview
 
-AIFootballPredictions aims to create a predictive model to forecast whether a football match will exceed 2.5 goals. The project is divided into three main stages:
+AIFootballPredictions aims to create a predictive model to forecast whether a football match will exceed 2.5 goals. The project is divided into four main stages:
 
 1. **Data Acquisition**: Download and merge historical football match data from multiple European leagues.
 2. **Data Preprocessing**: Process the raw data to engineer features, handle missing values, and select the most relevant features.
 3. **Model Training**: Train several machine learning models, perform hyperparameter tuning, and combine the best models into a voting classifier to make predictions.
+4. **Making Predictions**: Use the trained models to predict outcomes for upcoming matches and generate a formatted message for sharing.
 
 ## Directory Structure
 
@@ -40,7 +42,8 @@ The project is organized into the following directories:
             ├─── `acquire_next_matches.py`
             ├─── `data_acquisition.py`
             ├─── `data_preprocessing.py`
-            └─── `train_models.py`
+            ├─── `train_models.py`
+            └─── `make_predictions.py`
 ```
 
 ### Key Scripts
@@ -49,6 +52,7 @@ The project is organized into the following directories:
 - **`data_preprocessing.py`**: Preprocesses the raw data, performs feature engineering, and selects the most relevant features.
 - **`train_models.py`**: Trains machine learning models, performs hyperparameter tuning, and saves the best models.
 - **`acquire_next_matches.py`**: Acquires the next football matches data, updates team names using a mapping file, and saves the results to a JSON file.
+- **`make_predictions.py`**: Uses the trained models to predict outcomes for upcoming matches and formats the results into a readable txt message.
 
 ## Setup and Installation
 
@@ -111,6 +115,20 @@ This script will:
 - Update the team names in the next matches data using the mapping file.
     - This step is necessary because the teams' names acquired with the [football-data.org API](https://www.football-data.org/) differ from the teams' names acquired from [football-data.co.uk](https://www.football-data.co.uk/), which've been used to train the ML models. 
 - Save the updated next matches to a JSON file.
+
+## Making Predictions
+
+To predict the outcomes for upcoming matches and generate a formatted message for sharing, run the `make_predictions.py` script:
+
+    ```bash
+    python scripts/make_predictions.py --models_dir models --data_dir data/processed --output_file final_predictions.txt --json_competitions data/next_matches.json
+
+    ```
+This script will:
+
+- Load the pre-trained models and the processed data.
+- Make predictions for upcoming matches based on the next matches data.
+- Format the predictions into a redable `.txt` message and save it to the specified output file.
 
 ## Supported Leagues
 
