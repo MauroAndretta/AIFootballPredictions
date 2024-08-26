@@ -36,14 +36,20 @@ HEADERS = { 'X-Auth-Token': API_KEY }
 COLUMN_NAME = "HomeTeam"  # The column name in the CSV files containing team names
 
 
-# Dictionary of major competition IDs (expand this list as needed)
+# Dictionary of major competition IDs and their corresponding competition codes
 COMPETITIONS = {
-    'E0': 2021,
-    'SP1': 2014,
-    'I1': 2019,
-    'D1': 2002,
-    'F1': 2015,
+    'E0': {'id': 2021, 'crest': 'https://crests.football-data.org/PL.png', 
+           'next_matches': []},
+    'SP1': {'id': 2014, 'crest': 'https://crests.football-data.org/PD.png', 
+            'next_matches': []},
+    'I1': {'id': 2019, 'crest': 'https://crests.football-data.org/SA.png',
+           'next_matches': []},
+    'D1': {'id': 2002, 'crest': 'https://crests.football-data.org/BL1.png',
+           'next_matches': []},
+    'F1': {'id': 2015, 'crest': 'https://crests.football-data.org/FL1.png',
+           'next_matches': []}, 
 }
+
 
 TEAMS_NAMES_MAPPING = {
     'Arsenal FC': 'Arsenal',
@@ -146,29 +152,26 @@ TEAMS_NAMES_MAPPING = {
     'FC Metz': 'Metz',
 }
 
-def get_next_matches(competitions: dict, headers: dict, base_url: str) -> dict:
+def get_next_matches(headers: dict, base_url: str) -> dict:
     """
     Get the next matches for each major league.
 
     Parameters:
-    competitions (dict): Dictionary of competition codes and their corresponding IDs.
     headers (dict): Headers to include in the API request, including the API key.
     base_url (str): Base URL of the football-data.org API.
 
     Returns:
     dict: Dictionary containing the next matches for each competition.
     """
-    next_matches = {}
+    for competition, competition_info in COMPETITIONS.items():
 
-    for competition, competition_id in competitions.items():
-        next_matches[competition] = []
-
-        url = f'{base_url}/competitions/{competition_id}/matches'
+        url = f'{base_url}/competitions/{competition_info["id"]}/matches'
         response = requests.get(url, headers=headers)
         data = response.json()
 
         current_matchday = data['matches'][0]['season']['currentMatchday']  # int
         total_number_of_matches = len(data['matches'])  # int
+        # Get the last match day to avoid out of range error
         last_match_day = data['matches'][-1]['matchday']
         next_matchday = current_matchday + 1 if current_matchday < last_match_day else last_match_day
 
@@ -178,6 +181,7 @@ def get_next_matches(competitions: dict, headers: dict, base_url: str) -> dict:
             if match['matchday'] != next_matchday:
                 continue
 
+            # Get the match date, home team, and away team
             match_date = datetime.strptime(match['utcDate'], '%Y-%m-%dT%H:%M:%SZ')
             formatted_date = match_date.strftime('%Y-%m-%d %H:%M:%S')
             home_team = match['homeTeam']['name']
@@ -185,13 +189,17 @@ def get_next_matches(competitions: dict, headers: dict, base_url: str) -> dict:
 
             print(f'{formatted_date} - {home_team} vs. {away_team}')
 
-            next_matches[competition].append({
+            # Get the crest for the home team and away team
+            home_team_crest_url = match['homeTeam']['crest']
+            away_team_crest_url = match['awayTeam']['crest']
+
+            COMPETITIONS[competition]["next_matches"].append({
                 'date': formatted_date,
                 'home_team': home_team,
                 'away_team': away_team,
-            })
-
-    return next_matches       
+                'home_team_crest': home_team_crest_url,
+                'away_team_crest': away_team_crest_url
+            }) 
 
 def read_unique_team_names(directory_path: str, column_name: str) -> list:
     """
@@ -226,9 +234,17 @@ def replace_team_names(matches_dict: dict, name_mapping: dict) -> dict:
 
     Returns:
     dict: Updated matches_dict with team names replaced according to name_mapping.
+
+    Expected schema of matches_dict:
+    {
+    'E0': {'id': 2021, 
+            'crest': 'https://crests.football-data.org/PL.png', 
+           'next_matches': []},
+
+           ...
     """
-    for league, matches in matches_dict.items():
-        for match in matches:
+    for league, leagues_info in matches_dict.items():
+        for match in leagues_info["next_matches"]:
             if match['home_team'] in name_mapping:
                 match['home_team'] = name_mapping[match['home_team']]
             if match['away_team'] in name_mapping:
@@ -281,10 +297,10 @@ if __name__ == "__main__":
     args = parse_arguments()
 
     # Step 1: Fetch the next matches data
-    next_matches = get_next_matches(COMPETITIONS, HEADERS, BASE_URL)
+    get_next_matches(HEADERS, BASE_URL)
 
     # Step 2: Replace team names in the next matches using the mapping
-    next_matches_fd_couk_format = replace_team_names(next_matches, TEAMS_NAMES_MAPPING)
+    next_matches_fd_couk_format = replace_team_names(COMPETITIONS, TEAMS_NAMES_MAPPING)
 
     # Step 3: Save the updated next_matches dictionary to a JSON file
     save_to_json(next_matches_fd_couk_format, args.next_matches_output_file)
