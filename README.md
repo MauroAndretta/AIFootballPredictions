@@ -2,6 +2,70 @@
 
 **AIFootballPredictions** is a machine learning-based system designed to predict whether a football match will have over 2.5 goals. Leveraging historical data from top European leagues (**Serie A, EPL, Bundesliga, La Liga, Ligue 1**), it utilizes advanced feature engineering and model training techniques to deliver accurate predictions, making it a valuable tool for sports analytics enthusiasts.
 
+## Predictions of the week
+
+
+🎯 **AI Football Predictions: Will There Be Over 2.5 Goals?** 🎯
+
+Check out the latest predictions for the upcoming football matches! We've analyzed the data and here are our thoughts:
+
+*PREDICTIONS DONE: 2024-08-26*
+
+**Premier League**:
+- ⚽ **Arsenal** 🆚 **Brighton**: Over 2.5 Goals! 🔥 (89.35% chance)
+- ⚽ **Brentford** 🆚 **Southampton**: Over 2.5 Goals! 🔥 (53.67% chance)
+- ⚽ **Everton** 🆚 **Bournemouth**: Over 2.5 Goals! 🔥 (65.2% chance)
+- ⚽ **Ipswich** 🆚 **Fulham**: Under 2.5 Goals (94.44% chance)
+- ⚽ **Leicester** 🆚 **Aston Villa**: Under 2.5 Goals (60.8% chance)
+- ⚽ **Nott'm Forest** 🆚 **Wolves**: Under 2.5 Goals (81.29% chance)
+- ⚽ **West Ham** 🆚 **Man City**: Under 2.5 Goals (66.69% chance)
+- ⚽ **Chelsea** 🆚 **Crystal Palace**: Under 2.5 Goals (87.72% chance)
+- ⚽ **Newcastle** 🆚 **Tottenham**: Over 2.5 Goals! 🔥 (62.51% chance)
+- ⚽ **Man United** 🆚 **Liverpool**: Over 2.5 Goals! 🔥 (66.29% chance)
+
+**Serie A**:
+- ⚽ **Inter** 🆚 **Atalanta**: Under 2.5 Goals (77.14% chance)
+- ⚽ **Bologna** 🆚 **Empoli**: Under 2.5 Goals (80.63% chance)
+- ⚽ **Lecce** 🆚 **Cagliari**: Under 2.5 Goals (76.9% chance)
+- ⚽ **Lazio** 🆚 **Milan**: Under 2.5 Goals (64.26% chance)
+- ⚽ **Fiorentina** 🆚 **Monza**: Over 2.5 Goals! 🔥 (85.88% chance)
+- ⚽ **Genoa** 🆚 **Verona**: Under 2.5 Goals (88.34% chance)
+- ⚽ **Juventus** 🆚 **Roma**: Under 2.5 Goals (74.77% chance)
+- ⚽ **Udinese** 🆚 **Como**: Over 2.5 Goals! 🔥 (84.38% chance)
+
+**Bundesliga**:
+- ⚽ **Stuttgart** 🆚 **Mainz**: Over 2.5 Goals! 🔥 (85.49% chance)
+- ⚽ **Ein Frankfurt** 🆚 **Hoffenheim**: Over 2.5 Goals! 🔥 (66.27% chance)
+- ⚽ **Werder Bremen** 🆚 **Dortmund**: Over 2.5 Goals! 🔥 (73.01% chance)
+- ⚽ **Bochum** 🆚 **M'gladbach**: Over 2.5 Goals! 🔥 (72.35% chance)
+- ⚽ **Leverkusen** 🆚 **RB Leipzig**: Over 2.5 Goals! 🔥 (67.08% chance)
+- ⚽ **Heidenheim** 🆚 **Augsburg**: Under 2.5 Goals (63.1% chance)
+- ⚽ **Bayern Munich** 🆚 **Freiburg**: Over 2.5 Goals! 🔥 (81.77% chance)
+
+**La Liga**:
+- ⚽ **Barcelona** 🆚 **Valladolid**: Over 2.5 Goals! 🔥 (89.77% chance)
+- ⚽ **Ath Bilbao** 🆚 **Ath Madrid**: Over 2.5 Goals! 🔥 (62.0% chance)
+- ⚽ **Espanol** 🆚 **Vallecano**: Over 2.5 Goals! 🔥 (50.52% chance)
+- ⚽ **Valencia** 🆚 **Villarreal**: Under 2.5 Goals (63.74% chance)
+- ⚽ **Osasuna** 🆚 **Celta**: Under 2.5 Goals (56.08% chance)
+- ⚽ **Alaves** 🆚 **Las Palmas**: Under 2.5 Goals (98.67% chance)
+- ⚽ **Sevilla** 🆚 **Girona**: Under 2.5 Goals (77.4% chance)
+- ⚽ **Getafe** 🆚 **Sociedad**: Under 2.5 Goals (82.12% chance)
+- ⚽ **Real Madrid** 🆚 **Betis**: Over 2.5 Goals! 🔥 (79.54% chance)
+
+**Ligue 1**:
+- ⚽ **Lyon** 🆚 **Strasbourg**: Over 2.5 Goals! 🔥 (50.14% chance)
+- ⚽ **Brest** 🆚 **St Etienne**: Under 2.5 Goals (86.7% chance)
+- ⚽ **Montpellier** 🆚 **Nantes**: Over 2.5 Goals! 🔥 (67.8% chance)
+- ⚽ **Toulouse** 🆚 **Marseille**: Under 2.5 Goals (65.19% chance)
+- ⚽ **Monaco** 🆚 **Lens**: Under 2.5 Goals (65.95% chance)
+- ⚽ **Angers** 🆚 **Nice**: Under 2.5 Goals (54.81% chance)
+- ⚽ **Le Havre** 🆚 **Auxerre**: Over 2.5 Goals! 🔥 (93.84% chance)
+- ⚽ **Reims** 🆚 **Rennes**: Under 2.5 Goals (60.89% chance)
+- ⚽ **Lille** 🆚 **Paris SG**: Over 2.5 Goals! 🔥 (79.83% chance)
+
+---
+
 ## Table of Contents
 
 1. [Project Overview](#project-overview)
@@ -39,12 +103,13 @@ The project is organized into the following directories:
     ├─── `models`: the folder with the saved and trained models
     ├─── `notebooks`: all the notebooks if any
     └─── `scripts`: all the python scripts
-            ├─── `acquire_next_matches.py`
             ├─── `data_acquisition.py`
             ├─── `data_preprocessing.py`
             ├─── `train_models.py`
+            ├─── `acquire_next_matches.py`
             └─── `make_predictions.py`
 ```
+
 
 ### Key Scripts
 
@@ -53,6 +118,8 @@ The project is organized into the following directories:
 - **`train_models.py`**: Trains machine learning models, performs hyperparameter tuning, and saves the best models.
 - **`acquire_next_matches.py`**: Acquires the next football matches data, updates team names using a mapping file, and saves the results to a JSON file.
 - **`make_predictions.py`**: Uses the trained models to predict outcomes for upcoming matches and formats the results into a readable txt message.
+
+**Note**: it is suggested to avoid path error, to execute all the scripts in the root folder. 
 
 ## Setup and Installation
 
@@ -122,7 +189,6 @@ To predict the outcomes for upcoming matches and generate a formatted message fo
 
     ```bash
     python scripts/make_predictions.py --models_dir models --data_dir data/processed --output_file final_predictions.txt --json_competitions data/next_matches.json
-
     ```
 This script will:
 
