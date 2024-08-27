@@ -127,7 +127,7 @@ def make_predictions(league: str, league_model, league_data: pd.DataFrame, compe
     league_section = ""
     for competition_league, competitions_info in competitions.items():
         if competition_league == league:
-            league_section = f"🔵 **{competitions_info['name']}**:\n"
+            league_section = f"**{competitions_info['name']}**:\n"
             for match in competitions_info["next_matches"]:
                 home_team = match['home_team']
                 away_team = match['away_team']

@@ -134,7 +134,7 @@ TEAMS_NAMES_MAPPING = {
     'Udinese Calcio': 'Udinese',
     'Como 1907': 'Como', 
     '1. FC Union Berlin': 'Union Berlin',
-    'FC St. Pauli 1910': None,  # No match found in the list
+    'FC St. Pauli 1910': 'St Pauli',
     'VfB Stuttgart': 'Stuttgart',
     '1. FSV Mainz 05': 'Mainz',
     'Eintracht Frankfurt': 'Ein Frankfurt',
@@ -143,7 +143,7 @@ TEAMS_NAMES_MAPPING = {
     'Borussia Dortmund': 'Dortmund',
     'VfL Bochum 1848': 'Bochum',
     'Borussia Mönchengladbach': "M'gladbach",
-    'Holstein Kiel': None,  # No match found in the list
+    'Holstein Kiel': 'Holstein Kiel',
     'VfL Wolfsburg': 'Wolfsburg',
     'Bayer 04 Leverkusen': 'Leverkusen',
     'RB Leipzig': 'RB Leipzig',
