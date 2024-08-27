@@ -212,8 +212,6 @@ For this reason be carful when executing the [data acquisition](#data-acquisitio
 
 If you want to contribute to this project, please fork the repository and submit a pull request. For major changes, please open an issue first to discuss what you would like to change.
 
-## License 
-
 ## License
 
 This project is licensed under the [BSD-3-Claude license](LICENSE) - see the `LICENSE` file for details.
