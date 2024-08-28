@@ -213,7 +213,7 @@ def get_next_matches(headers: dict, base_url: str) -> dict:
             last_match_day = data['matches'][-1]['matchday']
 
             # TODO A better management of the matchday is needed
-            next_matchday = current_matchday if current_matchday < last_match_day else last_match_day
+            next_matchday = current_matchday + 1 if current_matchday < last_match_day else last_match_day
 
             print(f'{competition}: Current Matchday {current_matchday}, Total Matches {total_number_of_matches}')  
 
