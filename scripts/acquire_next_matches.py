@@ -204,7 +204,7 @@ def get_next_matches(headers: dict, base_url: str) -> dict:
             raise Exception(f"Request failed with status code {response.status_code}: {response.text}")
         # else if the request was successful
         else:
-
+            print(f"Request successful for {competition} with status code {response.status_code}")
             data = response.json()
 
             current_matchday = data['matches'][0]['season']['currentMatchday']  # int
