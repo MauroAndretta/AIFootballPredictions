@@ -75,6 +75,7 @@ Check out the latest predictions for the upcoming football matches! We've analyz
 5. [Data Preprocessing](#data-preprocessing)
 6. [Model Training](#model-training)
 7. [Upcoming Matches Acquisition](#upcoming-matches-acquisition)
+    - [Set up the API_KEY](#set-up-the-API_KEY)
 8. [Making Predictions](#making-predictions)
 9. [Supported Leagues](#supported-leagues)
 10. [Contributing](#contributing)
@@ -182,6 +183,33 @@ This script will:
 - Update the team names in the next matches data using the mapping file.
     - This step is necessary because the teams' names acquired with the [football-data.org API](https://www.football-data.org/) differ from the teams' names acquired from [football-data.co.uk](https://www.football-data.co.uk/), which've been used to train the ML models. 
 - Save the updated next matches to a JSON file.
+
+### Setu up the API_KEY 
+
+In order to properly execute the `acquire_next_matches.py` script it is first necessary to set up the API_KEY to gather the next matches information. Below the procedure on how to properly set up the variable:
+
+1. **Register for an API Key:**
+   - Go to the [Football-Data.org website](https://www.football-data.org/) and register to get your personal API key.
+
+2. **Create a `~/.env` File:**
+   - This file will be used by the `load_dotenv` library to set up the `API_FOOTBALL_DATA` environment variable.
+   - To create the file:
+     - Open your terminal and run the command: `vim ~/.env`
+     - This will create a new `~/.env` file if it doesn't already exist.
+
+3. **Insert the API Key:**
+   - After running the `vim` command, press the `i` key (for "insert mode").
+   - Write down the following line, replacing `your_personal_key` with your actual API key:
+     - `API_FOOTBALL_DATA=your_personal_key`
+
+4. **Save and Exit:**
+   - Press the `Esc` key to exit insert mode.
+   - Then, type `:wq!` and press `Enter` to save the changes and exit the editor.
+
+5. **Verify the Variable:**
+   - To check if the variable has been properly set, run the following command from the terminal:
+     - `cat ~/.env`
+   - You should see the `API_FOOTBALL_DATA` variable listed with your API key.
 
 ## Making Predictions
 
