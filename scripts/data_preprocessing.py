@@ -284,15 +284,18 @@ def preprocess_and_save_csv(input_folder, output_folder, num_features, missing_t
         df = drop_useless_columns(df, ['FTHG', 'FTAG', 'HTHG', 'HTAG'] )
         print("Useless columns dropped.")
 
+        # Handle missing values
+        df = handle_missing_values(df, missing_threshold=missing_threshold)
+        print("Missing values handled.")
+
         # Feature Selection
         selected_features = feature_selection(df, num_features=num_features, clustering_threshold=clustering_threshold)
         print(f"Number of selected features: {len(selected_features)}")
         print("Selected features after clustering:", selected_features)
         
-        # Create final dataframe with selected features and handle missing values
+        # Create final dataframe with selected features
         categorical_columns = df.select_dtypes(include='object').columns.tolist()
         df_selected = df[["Date"] + categorical_columns + selected_features + ['Over2.5']]
-        df_selected = handle_missing_values(df_selected, missing_threshold)
 
         # Save the preprocessed dataframe
         save_preprocessed_data(df_selected, output_folder, filename)
