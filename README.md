@@ -75,7 +75,7 @@ Check out the latest predictions for the upcoming football matches! We've analyz
 5. [Data Preprocessing](#data-preprocessing)
 6. [Model Training](#model-training)
 7. [Upcoming Matches Acquisition](#upcoming-matches-acquisition)
-    - [Set up the API_KEY](#set-up-the-API_KEY)
+    - [Set up the API_KEY](#setu-up-the-api_key)
 8. [Making Predictions](#making-predictions)
 9. [Supported Leagues](#supported-leagues)
 10. [Contributing](#contributing)
@@ -144,9 +144,9 @@ To set up the environment for this project, follow these steps:
 
 To download and merge football match data, run the `data_acquisition.py` script:
 
-    ```bash
-    python scripts/data_acquisition.py --leagues E0 I1 SP1 F1 D1 --seasons 2425 2324 2223 --raw_data_output_dir data/raw
-    ```
+```bash
+python scripts/data_acquisition.py --leagues E0 I1 SP1 F1 D1 --seasons 2425 2324 2223 --raw_data_output_dir data/raw
+```
 This script downloads match data from [football-data.co.uk](https://www.football-data.co.uk/) for the specified leagues and seasons, merges them, and saves the results to the specified output directory.
 
 To avoid error please see the [Supported Leagues](#supported-leagues) sections. 
@@ -155,27 +155,27 @@ To avoid error please see the [Supported Leagues](#supported-leagues) sections.
 
 Once the raw data is downloaded, preprocess it by running the `data_preprocessing.py` script:
 
-   ```bash
-   python scripts/data_preprocessing.py --raw_data_input_dir data/raw --processed_data_output_dir data/processed --num_features 20 --clustering_threshold 0.5
-   ```
+```bash
+python scripts/data_preprocessing.py --raw_data_input_dir data/raw --processed_data_output_dir data/processed --num_features 20 --clustering_threshold 0.5
+```
 This script processes each CSV file in the input folder, performs feature engineering, selects relevant features while addressing feature correlation, handles missing values, and saves the processed data.
 
 ## Model Training
 
 To train machine learning models and create a voting classifier, use the `train_models.py` script:
 
-   ```bash
-   python scripts/train_models.py --processed_data_input_dir data/processed --trained_models_output_dir models --metric_choice accuracy --n_splits 10 --voting soft
-   ```
+```bash
+python scripts/train_models.py --processed_data_input_dir data/processed --trained_models_output_dir models --metric_choice accuracy --n_splits 10 --voting soft
+```
 This script processes each CSV file individually, trains several machine learning models, performs hyperparameter tuning, combines the best models into a voting classifier, and saves the trained voting classifier for each league.
 
 ## Upcoming Matches Acquisition
 
 To acquire the next football matches data and update the team names, run the `acquire_next_matches.py` script:
 
-    ```bash
-    python scripts/acquire_next_matches.py --get_teams_names_dir data/processed --next_matches_output_file data/next_matches.json
-    ```
+```bash
+python scripts/acquire_next_matches.py --get_teams_names_dir data/processed --next_matches_output_file data/next_matches.json
+```
 This script will:
 
 - Fetch the next matches data from the [football-data.org API](https://www.football-data.org/).
@@ -215,9 +215,9 @@ In order to properly execute the `acquire_next_matches.py` script it is first ne
 
 To predict the outcomes for upcoming matches and generate a formatted message for sharing, run the `make_predictions.py` script:
 
-    ```bash
-    python scripts/make_predictions.py --models_dir models --data_dir data/processed --output_file final_predictions.txt --json_competitions data/next_matches.json
-    ```
+```bash
+python scripts/make_predictions.py --models_dir models --data_dir data/processed --output_file final_predictions.txt --json_competitions data/next_matches.json
+```
 This script will:
 
 - Load the pre-trained models and the processed data.

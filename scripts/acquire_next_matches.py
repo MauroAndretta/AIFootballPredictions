@@ -35,6 +35,10 @@ BASE_URL = 'https://api.football-data.org/v4'
 HEADERS = { 'X-Auth-Token': API_KEY }
 COLUMN_NAME = "HomeTeam"  # The column name in the CSV files containing team names
 
+#define a list to store the env variables
+env_vars_name = [
+    "API_FOOTBALL_DATA"
+]
 
 # Dictionary of major competition IDs and their corresponding competition codes
 COMPETITIONS = {
@@ -184,6 +188,12 @@ def get_next_matches(headers: dict, base_url: str) -> dict:
     Returns:
     dict: Dictionary containing the next matches for each competition.
     """
+
+    # Check if the API key is provided
+    for var in env_vars_name:
+        if os.getenv(var) is None:
+            raise ValueError(f"Environment variable {var} is not set. Please see the README for more information.")
+
     for competition, competition_info in COMPETITIONS.items():
 
         url = f'{base_url}/competitions/{competition_info["id"]}/matches'
