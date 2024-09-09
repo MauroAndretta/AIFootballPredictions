@@ -10,6 +10,9 @@ __pycache__/
 crests/*
 predictions/*
 
+# Ignore all the images
+images/*
+
 # Ignore all the .csv files in the data folder
 data/*/*.csv
 

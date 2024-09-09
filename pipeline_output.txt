@@ -1,0 +1,742 @@
+Downloaded data from https://www.football-data.co.uk/mmz4281/2425/E0.csv
+
+Downloaded data from https://www.football-data.co.uk/mmz4281/2324/E0.csv
+
+Downloaded data from https://www.football-data.co.uk/mmz4281/2223/E0.csv
+
+Saved merged data to data/raw\E0_merged.csv
+
+Downloaded data from https://www.football-data.co.uk/mmz4281/2425/I1.csv
+
+Downloaded data from https://www.football-data.co.uk/mmz4281/2324/I1.csv
+
+Downloaded data from https://www.football-data.co.uk/mmz4281/2223/I1.csv
+
+Saved merged data to data/raw\I1_merged.csv
+
+Downloaded data from https://www.football-data.co.uk/mmz4281/2425/SP1.csv
+
+Downloaded data from https://www.football-data.co.uk/mmz4281/2324/SP1.csv
+
+Downloaded data from https://www.football-data.co.uk/mmz4281/2223/SP1.csv
+
+Saved merged data to data/raw\SP1_merged.csv
+
+Downloaded data from https://www.football-data.co.uk/mmz4281/2425/F1.csv
+
+Downloaded data from https://www.football-data.co.uk/mmz4281/2324/F1.csv
+
+Downloaded data from https://www.football-data.co.uk/mmz4281/2223/F1.csv
+
+Saved merged data to data/raw\F1_merged.csv
+
+Downloaded data from https://www.football-data.co.uk/mmz4281/2425/D1.csv
+
+Downloaded data from https://www.football-data.co.uk/mmz4281/2324/D1.csv
+
+Downloaded data from https://www.football-data.co.uk/mmz4281/2223/D1.csv
+
+Saved merged data to data/raw\D1_merged.csv
+
+Processing D1_merged.csv...
+
+Feature engineering completed.
+
+Useless columns dropped.
+
+Number of selected features: 18
+
+Selected features after clustering: ['Last5AwayOver2.5Perc', 'Last5HomeOver2.5Perc', 'HST', 'Last5AwayOver2.5Count', 'Last5HomeOver2.5Count', 'AST', 'AwayOver2.5Perc', 'HomeOver2.5Perc', 'AvgLast5HomeGoalsScored', 'AvgLast5AwayGoalsScored', 'AvgLast5AwayGoalsConceded', 'B365CAHH', 'AvgLast5HomeGoalsConceded', 'MaxC>2.5', 'AvgAwayGoalsScored', 'PC<2.5', 'HC', 'B365AHH']
+
+Missing values in each column:
+
+ Date                          0
+
+Div                           0
+
+Time                          0
+
+HomeTeam                      0
+
+AwayTeam                      0
+
+FTR                           0
+
+HTR                           0
+
+Season                        0
+
+Last5AwayOver2.5Perc          0
+
+Last5HomeOver2.5Perc          0
+
+HST                           0
+
+Last5AwayOver2.5Count         0
+
+Last5HomeOver2.5Count         0
+
+AST                           0
+
+AwayOver2.5Perc               0
+
+HomeOver2.5Perc               0
+
+AvgLast5HomeGoalsScored       0
+
+AvgLast5AwayGoalsScored       0
+
+AvgLast5AwayGoalsConceded     0
+
+B365CAHH                      0
+
+AvgLast5HomeGoalsConceded     0
+
+MaxC>2.5                      0
+
+AvgAwayGoalsScored            0
+
+PC<2.5                       25
+
+HC                            0
+
+B365AHH                       0
+
+Over2.5                       0
+
+dtype: int64
+
+
+
+Columns to drop due to excessive missing values:
+
+ Index(['PC<2.5'], dtype='object')
+
+
+
+Remaining missing values:
+
+ Date                         0
+
+Div                          0
+
+Time                         0
+
+HomeTeam                     0
+
+AwayTeam                     0
+
+FTR                          0
+
+HTR                          0
+
+Season                       0
+
+Last5AwayOver2.5Perc         0
+
+Last5HomeOver2.5Perc         0
+
+HST                          0
+
+Last5AwayOver2.5Count        0
+
+Last5HomeOver2.5Count        0
+
+AST                          0
+
+AwayOver2.5Perc              0
+
+HomeOver2.5Perc              0
+
+AvgLast5HomeGoalsScored      0
+
+AvgLast5AwayGoalsScored      0
+
+AvgLast5AwayGoalsConceded    0
+
+B365CAHH                     0
+
+AvgLast5HomeGoalsConceded    0
+
+MaxC>2.5                     0
+
+AvgAwayGoalsScored           0
+
+HC                           0
+
+B365AHH                      0
+
+Over2.5                      0
+
+dtype: int64
+
+Preprocessed file saved as data/processed\D1_merged_preprocessed.csv
+
+
+
+Processing E0_merged.csv...
+
+Feature engineering completed.
+
+Useless columns dropped.
+
+Number of selected features: 16
+
+Selected features after clustering: ['Last5HomeOver2.5Perc', 'Last5AwayOver2.5Perc', 'HST', 'Last5HomeOver2.5Count', 'Last5AwayOver2.5Count', 'AST', 'HomeOver2.5Perc', 'AvgLast5AwayGoalsConceded', 'AwayOver2.5Perc', 'AvgLast5HomeGoalsScored', 'AvgLast5HomeGoalsConceded', 'AvgLast5AwayGoalsScored', 'B365C<2.5', 'MaxC>2.5', 'AvgHomeGoalsScored', 'HR']
+
+Missing values in each column:
+
+ Date                         0
+
+Div                          0
+
+Time                         0
+
+HomeTeam                     0
+
+AwayTeam                     0
+
+FTR                          0
+
+HTR                          0
+
+Referee                      0
+
+Season                       0
+
+Last5HomeOver2.5Perc         0
+
+Last5AwayOver2.5Perc         0
+
+HST                          0
+
+Last5HomeOver2.5Count        0
+
+Last5AwayOver2.5Count        0
+
+AST                          0
+
+HomeOver2.5Perc              0
+
+AvgLast5AwayGoalsConceded    0
+
+AwayOver2.5Perc              0
+
+AvgLast5HomeGoalsScored      0
+
+AvgLast5HomeGoalsConceded    0
+
+AvgLast5AwayGoalsScored      0
+
+B365C<2.5                    0
+
+MaxC>2.5                     0
+
+AvgHomeGoalsScored           0
+
+HR                           0
+
+Over2.5                      0
+
+dtype: int64
+
+
+
+Columns to drop due to excessive missing values:
+
+ Index([], dtype='object')
+
+
+
+Remaining missing values:
+
+ Date                         0
+
+Div                          0
+
+Time                         0
+
+HomeTeam                     0
+
+AwayTeam                     0
+
+FTR                          0
+
+HTR                          0
+
+Referee                      0
+
+Season                       0
+
+Last5HomeOver2.5Perc         0
+
+Last5AwayOver2.5Perc         0
+
+HST                          0
+
+Last5HomeOver2.5Count        0
+
+Last5AwayOver2.5Count        0
+
+AST                          0
+
+HomeOver2.5Perc              0
+
+AvgLast5AwayGoalsConceded    0
+
+AwayOver2.5Perc              0
+
+AvgLast5HomeGoalsScored      0
+
+AvgLast5HomeGoalsConceded    0
+
+AvgLast5AwayGoalsScored      0
+
+B365C<2.5                    0
+
+MaxC>2.5                     0
+
+AvgHomeGoalsScored           0
+
+HR                           0
+
+Over2.5                      0
+
+dtype: int64
+
+Preprocessed file saved as data/processed\E0_merged_preprocessed.csv
+
+
+
+Processing F1_merged.csv...
+
+Feature engineering completed.
+
+Useless columns dropped.
+
+Number of selected features: 17
+
+Selected features after clustering: ['Last5HomeOver2.5Perc', 'MaxCAHA', 'Last5AwayOver2.5Perc', 'AST', 'Last5HomeOver2.5Count', 'HST', 'Last5AwayOver2.5Count', 'HomeOver2.5Perc', 'AvgLast5AwayGoalsScored', 'AvgLast5HomeGoalsScored', 'AwayOver2.5Perc', 'AvgLast5AwayGoalsConceded', 'AvgLast5HomeGoalsConceded', 'BWCD', 'AvgHomeGoalsScored', 'AvgAwayGoalsConceded', 'AvgAHH']
+
+Missing values in each column:
+
+ Date                         0
+
+Div                          0
+
+Time                         0
+
+HomeTeam                     0
+
+AwayTeam                     0
+
+FTR                          0
+
+HTR                          0
+
+Season                       0
+
+Last5HomeOver2.5Perc         0
+
+MaxCAHA                      0
+
+Last5AwayOver2.5Perc         0
+
+AST                          0
+
+Last5HomeOver2.5Count        0
+
+HST                          0
+
+Last5AwayOver2.5Count        0
+
+HomeOver2.5Perc              0
+
+AvgLast5AwayGoalsScored      0
+
+AvgLast5HomeGoalsScored      0
+
+AwayOver2.5Perc              0
+
+AvgLast5AwayGoalsConceded    0
+
+AvgLast5HomeGoalsConceded    0
+
+BWCD                         9
+
+AvgHomeGoalsScored           0
+
+AvgAwayGoalsConceded         0
+
+AvgAHH                       0
+
+Over2.5                      0
+
+dtype: int64
+
+
+
+Columns to drop due to excessive missing values:
+
+ Index(['BWCD'], dtype='object')
+
+
+
+Remaining missing values:
+
+ Date                         0
+
+Div                          0
+
+Time                         0
+
+HomeTeam                     0
+
+AwayTeam                     0
+
+FTR                          0
+
+HTR                          0
+
+Season                       0
+
+Last5HomeOver2.5Perc         0
+
+MaxCAHA                      0
+
+Last5AwayOver2.5Perc         0
+
+AST                          0
+
+Last5HomeOver2.5Count        0
+
+HST                          0
+
+Last5AwayOver2.5Count        0
+
+HomeOver2.5Perc              0
+
+AvgLast5AwayGoalsScored      0
+
+AvgLast5HomeGoalsScored      0
+
+AwayOver2.5Perc              0
+
+AvgLast5AwayGoalsConceded    0
+
+AvgLast5HomeGoalsConceded    0
+
+AvgHomeGoalsScored           0
+
+AvgAwayGoalsConceded         0
+
+AvgAHH                       0
+
+Over2.5                      0
+
+dtype: int64
+
+Preprocessed file saved as data/processed\F1_merged_preprocessed.csv
+
+
+
+Processing I1_merged.csv...
+
+Feature engineering completed.
+
+Useless columns dropped.
+
+Number of selected features: 15
+
+Selected features after clustering: ['Last5AwayOver2.5Perc', 'HF', 'Last5HomeOver2.5Perc', 'HST', 'AST', 'AwayOver2.5Perc', 'HomeOver2.5Perc', 'AvgLast5AwayGoalsConceded', 'AvgLast5HomeGoalsScored', 'AvgLast5AwayGoalsScored', 'AvgLast5HomeGoalsConceded', 'MaxC>2.5', 'AS', 'AvgAwayGoalsScored', 'PAHA']
+
+Missing values in each column:
+
+ Date                         0
+
+Div                          0
+
+Time                         0
+
+HomeTeam                     0
+
+AwayTeam                     0
+
+FTR                          0
+
+HTR                          0
+
+Season                       0
+
+Last5AwayOver2.5Perc         0
+
+HF                           0
+
+Last5HomeOver2.5Perc         0
+
+HST                          0
+
+AST                          0
+
+AwayOver2.5Perc              0
+
+HomeOver2.5Perc              0
+
+AvgLast5AwayGoalsConceded    0
+
+AvgLast5HomeGoalsScored      0
+
+AvgLast5AwayGoalsScored      0
+
+AvgLast5HomeGoalsConceded    0
+
+MaxC>2.5                     0
+
+AS                           0
+
+AvgAwayGoalsScored           0
+
+PAHA                         0
+
+Over2.5                      0
+
+dtype: int64
+
+
+
+Columns to drop due to excessive missing values:
+
+ Index([], dtype='object')
+
+
+
+Remaining missing values:
+
+ Date                         0
+
+Div                          0
+
+Time                         0
+
+HomeTeam                     0
+
+AwayTeam                     0
+
+FTR                          0
+
+HTR                          0
+
+Season                       0
+
+Last5AwayOver2.5Perc         0
+
+HF                           0
+
+Last5HomeOver2.5Perc         0
+
+HST                          0
+
+AST                          0
+
+AwayOver2.5Perc              0
+
+HomeOver2.5Perc              0
+
+AvgLast5AwayGoalsConceded    0
+
+AvgLast5HomeGoalsScored      0
+
+AvgLast5AwayGoalsScored      0
+
+AvgLast5HomeGoalsConceded    0
+
+MaxC>2.5                     0
+
+AS                           0
+
+AvgAwayGoalsScored           0
+
+PAHA                         0
+
+Over2.5                      0
+
+dtype: int64
+
+Preprocessed file saved as data/processed\I1_merged_preprocessed.csv
+
+
+
+Processing SP1_merged.csv...
+
+Feature engineering completed.
+
+Useless columns dropped.
+
+Number of selected features: 14
+
+Selected features after clustering: ['Last5AwayOver2.5Perc', 'Last5HomeOver2.5Perc', 'HST', 'AST', 'HomeOver2.5Perc', 'AvgLast5HomeGoalsScored', 'AwayOver2.5Perc', 'AvgLast5AwayGoalsConceded', 'AvgLast5AwayGoalsScored', 'AvgC>2.5', 'AvgLast5HomeGoalsConceded', 'AR', 'AvgHomeGoalsScored', 'AS']
+
+Missing values in each column:
+
+ Date                         0
+
+Div                          0
+
+Time                         0
+
+HomeTeam                     0
+
+AwayTeam                     0
+
+FTR                          0
+
+HTR                          0
+
+Season                       0
+
+Last5AwayOver2.5Perc         0
+
+Last5HomeOver2.5Perc         0
+
+HST                          0
+
+AST                          0
+
+HomeOver2.5Perc              0
+
+AvgLast5HomeGoalsScored      0
+
+AwayOver2.5Perc              0
+
+AvgLast5AwayGoalsConceded    0
+
+AvgLast5AwayGoalsScored      0
+
+AvgC>2.5                     0
+
+AvgLast5HomeGoalsConceded    0
+
+AR                           0
+
+AvgHomeGoalsScored           0
+
+AS                           0
+
+Over2.5                      0
+
+dtype: int64
+
+
+
+Columns to drop due to excessive missing values:
+
+ Index([], dtype='object')
+
+
+
+Remaining missing values:
+
+ Date                         0
+
+Div                          0
+
+Time                         0
+
+HomeTeam                     0
+
+AwayTeam                     0
+
+FTR                          0
+
+HTR                          0
+
+Season                       0
+
+Last5AwayOver2.5Perc         0
+
+Last5HomeOver2.5Perc         0
+
+HST                          0
+
+AST                          0
+
+HomeOver2.5Perc              0
+
+AvgLast5HomeGoalsScored      0
+
+AwayOver2.5Perc              0
+
+AvgLast5AwayGoalsConProcessing league: D1
+Evaluating Logistic Regression...
+Logistic Regression - accuracy_score: 0.8020 ± 0.0454
+Best parameters for Logistic Regression: {'C': 0.1, 'max_iter': 3000, 'penalty': 'l2', 'solver': 'liblinear'}
+Evaluating KNN...
+KNN - accuracy_score: 0.7632 ± 0.0556
+Best parameters for KNN: {'metric': 'manhattan', 'n_neighbors': 7, 'weights': 'uniform'}
+Evaluating SVM...
+SVM - accuracy_score: 0.8212 ± 0.0498
+Best parameters for SVM: {'C': 1, 'degree': 2, 'kernel': 'linear'}
+Evaluating Random Forest...
+Random Forest - accuracy_score: 0.7842 ± 0.0405
+Best parameters for Random Forest: {'bootstrap': True, 'max_depth': 9, 'n_estimators': 100}
+Evaluating XGBoost...
+XGBoost - accuracy_score: 0.7843 ± 0.0337
+Best parameters for XGBoost: {'learning_rate': 0.1, 'max_depth': 7, 'n_estimators': 200}
+Evaluating HistGradientBoosting...
+HistGradientBoosting - accuracy_score: 0.8019 ± 0.0527
+Best parameters for HistGradientBoosting: {'early_stopping': True, 'l2_regularization': 0.1, 'learning_rate': 0.1, 'max_depth': 5, 'max_iter': 100}
+Training Voting Classifier, an ensamble of the best models...
+Voting Classifier - accuracy_score: 0.7891 ± 0.0504
+Model saved to models\D1_voting_classifier.pkl
+Processing league: E0
+Evaluating Logistic Regression...
+Logistic Regression - accuracy_score: 0.8141 ± 0.0310
+Best parameters for Logistic Regression: {'C': 1, 'max_iter': 2000, 'penalty': 'l2', 'solver': 'liblinear'}
+Evaluating KNN...
+KNN - accuracy_score: 0.7731 ± 0.0389
+Best parameters for KNN: {'metric': 'euclidean', 'n_neighbors': 9, 'weights': 'distance'}
+Evaluating SVM...
+SVM - accuracy_score: 0.7897 ± 0.0532
+Best parameters for SVM: {'C': 1, 'degree': 5, 'kernel': 'rbf'}
+Evaluating Random Forest...
+Random Forest - accuracy_score: 0.7987 ± 0.0410
+Best parameters for Random Forest: {'bootstrap': True, 'max_depth': 7, 'n_estimators': 100}
+Evaluating XGBoost...
+XGBoost - accuracy_score: 0.7821 ± 0.0314
+Best parameters for XGBoost: {'learning_rate': 0.1, 'max_depth': 7, 'n_estimators': 50}
+Evaluating HistGradientBoosting...
+HistGradientBoosting - accuracy_score: 0.8051 ± 0.0235
+Best parameters for HistGradientBoosting: {'early_stopping': True, 'l2_regularization': 0.1, 'learning_rate': 0.1, 'max_depth': 3, 'max_iter': 100}
+Training Voting Classifier, an ensamble of the best models...
+Voting Classifier - accuracy_score: 0.8026 ± 0.0354
+Model saved to models\E0_voting_classifier.pkl
+Processing league: F1
+Evaluating Logistic Regression...
+Logistic Regression - accuracy_score: 0.7939 ± 0.0518
+Best parameters for Logistic Regression: {'C': 10, 'max_iter': 3000, 'penalty': 'l2', 'solver': 'saga'}
+Evaluating KNN...
+KNN - accuracy_score: 0.7568 ± 0.0597
+Best parameters for KNN: {'metric': 'manhattan', 'n_neighbors': 7, 'weights': 'uniform'}
+Evaluating SVM...
+SVM - accuracy_score: 0.7980 ± 0.0608
+Best parameters for SVM: {'C': 10, 'degree': 4, 'kernel': 'rbf'}
+Evaluating Random Forest...
+Random Forest - accuracy_score: 0.7681 ± 0.0669
+Best parameters for Random Forest: {'bootstrap': True, 'max_depth': 9, 'n_estimators': 200}
+Evaluating XGBoost...
+XGBoost - accuracy_score: 0.7823 ± 0.0674
+Best parameters for XGBoost: {'learning_rate': 0.1, 'max_depth': 3, 'n_estimators': 50}
+Evaluating HistGradientBoosting...
+HistGradientBoosting - accuracy_score: 0.7781 ± 0.0603
+Best parameters for HistGradientBoosting: {'early_stopping': True, 'l2_regularization': 0.1, 'learning_rate': 0.1, 'max_depth': 3, 'max_iter': 100}
+Training Voting Classifier, an ensamble of the best models...
+Voting Classifier - accuracy_score: 0.7923 ± 0.0603
+Model saved to models\F1_voting_classifier.pkl
+Processing league: I1
+Evaluating Logistic Regression...
+Logistic Regression - accuracy_score: 0.8038 ± 0.0349
+Best parameters for Logistic Regression: {'C': 0.1, 'max_iter': 2000, 'penalty': 'l2', 'solver': 'saga'}
+Evaluating KNN...
+KNN - accuracy_score: 0.7615 ± 0.0497
+Best parameters for KNN: {'metric': 'manhattan', 'n_neighbors': 7, 'weights': 'uniform'}
+Evaluating SVM...
