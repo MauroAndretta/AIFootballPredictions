@@ -19,6 +19,9 @@ data/*/*.csv
 # Ignore all the .json in the notebooks folder
 notebooks/*.json
 
+# Ignore all the models
+models/*
+
 # Distribution / packaging
 .Python
 build/
