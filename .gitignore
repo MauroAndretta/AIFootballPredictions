@@ -6,8 +6,12 @@ __pycache__/
 # C extensions
 *.so
 
+# Ignore all the teams' crests and predictions
+crests/*
+predictions/*
+
 # Ignore all the .csv files in the data folder
-#data/*/*.csv
+data/*/*.csv
 
 # Ignore all the .json in the notebooks folder
 notebooks/*.json
