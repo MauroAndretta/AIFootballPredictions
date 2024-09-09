@@ -193,53 +193,56 @@ def get_next_matches(headers: dict, base_url: str) -> dict:
     for var in env_vars_name:
         if os.getenv(var) is None:
             raise ValueError(f"Environment variable {var} is not set. Please see the README for more information.")
+    
+    try:
+        for competition, competition_info in COMPETITIONS.items():
 
-    for competition, competition_info in COMPETITIONS.items():
+            url = f'{base_url}/competitions/{competition_info["id"]}/matches'
+            response = requests.get(url, headers=headers)
+            
+            # check if the request was successful
+            if response.status_code != 200:
+                raise Exception(f"Request failed with status code {response.status_code}: {response.text}")
+            # else if the request was successful
+            else:
+                print(f"Request successful for {competition} with status code {response.status_code}")
+                data = response.json()
 
-        url = f'{base_url}/competitions/{competition_info["id"]}/matches'
-        response = requests.get(url, headers=headers)
-        
-        # check if the request was successful
-        if response.status_code != 200:
-            raise Exception(f"Request failed with status code {response.status_code}: {response.text}")
-        # else if the request was successful
-        else:
-            print(f"Request successful for {competition} with status code {response.status_code}")
-            data = response.json()
+                current_matchday = data['matches'][0]['season']['currentMatchday']  # int
+                total_number_of_matches = len(data['matches'])  # int
+                # Get the last match day to avoid out of range error
+                last_match_day = data['matches'][-1]['matchday']
 
-            current_matchday = data['matches'][0]['season']['currentMatchday']  # int
-            total_number_of_matches = len(data['matches'])  # int
-            # Get the last match day to avoid out of range error
-            last_match_day = data['matches'][-1]['matchday']
+                # TODO A better management of the matchday is needed
+                next_matchday = current_matchday + 1 if current_matchday < last_match_day else last_match_day
 
-            # TODO A better management of the matchday is needed
-            next_matchday = current_matchday + 1 if current_matchday < last_match_day else last_match_day
+                print(f'{competition}: Current Matchday {current_matchday}, Total Matches {total_number_of_matches}')  
 
-            print(f'{competition}: Current Matchday {current_matchday}, Total Matches {total_number_of_matches}')  
+                for match in data['matches']:
+                    if match['matchday'] != next_matchday:
+                        continue
 
-            for match in data['matches']:
-                if match['matchday'] != next_matchday:
-                    continue
+                    # Get the match date, home team, and away team
+                    match_date = datetime.strptime(match['utcDate'], '%Y-%m-%dT%H:%M:%SZ')
+                    formatted_date = match_date.strftime('%Y-%m-%d %H:%M:%S')
+                    home_team = match['homeTeam']['name']
+                    away_team = match['awayTeam']['name']
 
-                # Get the match date, home team, and away team
-                match_date = datetime.strptime(match['utcDate'], '%Y-%m-%dT%H:%M:%SZ')
-                formatted_date = match_date.strftime('%Y-%m-%d %H:%M:%S')
-                home_team = match['homeTeam']['name']
-                away_team = match['awayTeam']['name']
+                    print(f'{formatted_date} - {home_team} vs. {away_team}')
 
-                print(f'{formatted_date} - {home_team} vs. {away_team}')
+                    # Get the crest for the home team and away team
+                    home_team_crest_url = match['homeTeam']['crest']
+                    away_team_crest_url = match['awayTeam']['crest']
 
-                # Get the crest for the home team and away team
-                home_team_crest_url = match['homeTeam']['crest']
-                away_team_crest_url = match['awayTeam']['crest']
-
-                COMPETITIONS[competition]["next_matches"].append({
-                    'date': formatted_date,
-                    'home_team': home_team,
-                    'away_team': away_team,
-                    'home_team_crest': home_team_crest_url,
-                    'away_team_crest': away_team_crest_url
-                }) 
+                    COMPETITIONS[competition]["next_matches"].append({
+                        'date': formatted_date,
+                        'home_team': home_team,
+                        'away_team': away_team,
+                        'home_team_crest': home_team_crest_url,
+                        'away_team_crest': away_team_crest_url
+                    }) 
+    except Exception as e:
+        raise Exception(f"An error occurred: {e}")
 
 def read_unique_team_names(directory_path: str, column_name: str) -> list:
     """
