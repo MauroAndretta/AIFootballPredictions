@@ -10,7 +10,7 @@ How to run:
 
 Example usage, it is suggested to run the script in the root directory:
 
-    python scripts/make_predictions.py --input_leagues_models_dir models --input_data_predict_dir data/processed --final_predictions_out_file data/final_predictions.txt --json_competitions data/next_matches.json
+    python scripts/make_predictions.py --input_leagues_models_dir models --input_data_predict_dir data/processed --final_predictions_out_file data/final_predictions.txt --next_matches data/next_matches.json
 
 Required Libraries:
 - pandas
@@ -49,6 +49,9 @@ AWAY_TEAM_FEATURES = [
     'AvgLast5AwayGoalsConceded', 'Last5AwayOver2.5Count', 'Last5AwayOver2.5Perc'
 ]
 
+"""
+The general features are common to both home and away teams and contain match information that is not specific to either team.
+This list in no longer necessary because in case that a feature is not in the home or away team features, it will be considered as a general feature.
 GENERAL_FEATURES = [
     'Div', 'Date', 'Time', 'FTR', 'Res', 'HTR', 'Attendance', 'Referee', 'Bb1X2', 'BbMxD', 'BbAvD', 'MaxD', 'AvgD',
     'B365D', 'BFD', 'BSD', 'BWD', 'GBD', 'IWD', 'LBD', 'PSD', 'SOD', 'SBD', 'SJD', 'SYD', 'VCD', 'WHD', 'BbOU',
@@ -56,7 +59,7 @@ GENERAL_FEATURES = [
     'Max>2.5', 'Max<2.5', 'Avg>2.5', 'AvgC>2.5', 'Avg<2.5', 'AvgC<2.5', 'MaxCAHA', 'MaxC>2.5', 'B365C<2.5', 'MaxCA',
     'B365CAHH', 'BbAH', 'Over2.5'
 ]
-
+"""
 
 def load_model(filepath: str):
     """Loads the machine learning model from a specified pickle file.
@@ -67,9 +70,12 @@ def load_model(filepath: str):
     Returns:
         model: The loaded machine learning model.
     """
-    with open(filepath, 'rb') as file:
-        model = pickle.load(file)
-    return model
+    try:
+        with open(filepath, 'rb') as file:
+            model = pickle.load(file)
+        return model
+    except Exception as e:
+        raise Exception(f"Error loading model: {e}")
 
 
 def load_league_data(filepath: str) -> pd.DataFrame:
@@ -81,7 +87,13 @@ def load_league_data(filepath: str) -> pd.DataFrame:
     Returns:
         pd.DataFrame: The loaded league data as a DataFrame.
     """
-    return pd.read_csv(filepath)
+    # check if the file exists
+    if not os.path.exists(filepath):
+        raise FileNotFoundError(f"File not found: {filepath}")
+    else:
+        print(f"Loading data from {filepath}...")
+    # Load the data from the CSV file
+        return pd.read_csv(filepath)
 
 
 def prepare_row_to_predict(home_team_df: pd.DataFrame, away_team_df: pd.DataFrame, numeric_columns: list) -> pd.DataFrame:
@@ -106,7 +118,8 @@ def prepare_row_to_predict(home_team_df: pd.DataFrame, away_team_df: pd.DataFram
             row_to_predict.loc[len(row_to_predict)-1, column] = home_team_final_df[column].mean()
         elif column in AWAY_TEAM_FEATURES:
             row_to_predict.loc[len(row_to_predict)-1, column] = away_team_final_df[column].mean()
-        elif column in GENERAL_FEATURES:
+        # If the column is not in the home or away team features, we take the average of both teams
+        else:
             row_to_predict.loc[len(row_to_predict)-1, column] = (away_team_final_df[column].mean() + home_team_final_df[column].mean()) / 2
 
     return row_to_predict
@@ -157,18 +170,18 @@ def make_predictions(league: str, league_model, league_data: pd.DataFrame, compe
     return league_section
 
 
-def main(input_leagues_models_dir: str, input_data_predict_dir: str, final_predictions_out_file: str, json_competitions: str):
+def main(input_leagues_models_dir: str, input_data_predict_dir: str, final_predictions_out_file: str, next_matches: str):
     """Main function that handles the entire prediction process.
     
     Args:
         input_leagues_models_dir (str): Directory containing the model files.
         input_data_predict_dir (str): Directory containing the processed data files.
         final_predictions_out_file (str): Path where the output Telegram message will be saved.
-        json_competitions (str): Path to the JSON file with upcoming matches information.
+        next_matches (str): Path to the JSON file with upcoming matches information.
     """
     try:
         print("Loading JSON file with upcoming matches...\n")
-        with open(json_competitions, 'r', encoding='utf-16') as json_file:
+        with open(next_matches, 'r', encoding='utf-16') as json_file:
             competitions = json.load(json_file)
     except Exception as e:
         raise Exception(f"Error loading JSON file: {e}")
@@ -203,7 +216,7 @@ if __name__ == "__main__":
     parser.add_argument('--input_leagues_models_dir', type=str, required=True, help="Directory containing the model files")
     parser.add_argument('--input_data_predict_dir', type=str, required=True, help="Directory containing the processed data files")
     parser.add_argument('--final_predictions_out_file', type=str, required=True, help="File path to save the Telegram message output")
-    parser.add_argument('--json_competitions', type=str, required=True, help="Path to the JSON file with upcoming matches information")
+    parser.add_argument('--next_matches', type=str, required=True, help="Path to the JSON file with upcoming matches information")
 
     args = parser.parse_args()
-    main(args.input_leagues_models_dir, args.input_data_predict_dir, args.final_predictions_out_file, args.json_competitions)
+    main(args.input_leagues_models_dir, args.input_data_predict_dir, args.final_predictions_out_file, args.next_matches)
