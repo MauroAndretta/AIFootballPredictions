@@ -5,7 +5,7 @@ Usage:
 ------
 Run this script from the terminal in the root folder as follows:
 
-    python scripts/data_acquisition.py --leagues E0 I1 SP1 F1 D1 --seasons 2324 2223 --raw_data_output_dir data/raw
+    python scripts/data_acquisition.py --leagues E0 I1 SP1 F1 D1 --seasons 2425 2324 2223 --raw_data_output_dir data/raw
 
 Parameters:
 -----------
