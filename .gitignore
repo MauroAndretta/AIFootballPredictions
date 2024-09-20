@@ -22,6 +22,12 @@ notebooks/*.json
 # Ignore all the models
 models/*
 
+# Ignore all the videos
+videos/*
+
+# Ignore all the reels
+reels/*
+
 # Distribution / packaging
 .Python
 build/
